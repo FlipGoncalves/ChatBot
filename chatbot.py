@@ -134,14 +134,6 @@ class Chatbot:
                         # Add entry to database
                         self.add_database_entry(entry_id, question, answer)
 
-                        # for answer in answers:
-                        #
-                        #     # Convert answer to string
-                        #     answer = '. '.join(answer)
-                        #
-                        #     # Add entry to database
-                        #     self.add_database_entry(entry_id, question, answer)
-
             # Sort index terms
             self.sort_terms()
 
