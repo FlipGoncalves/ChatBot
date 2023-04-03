@@ -1,0 +1,20 @@
+{"intents": [
+
+  {"class": "name",
+    "words": ["what’s your name?"],
+    "responses": ["I’m Steve, an AI-assisted chatbot!"]
+  },
+  {"class": "greetings",
+    "words": [ "Hi", "Hello", "Hey", "Good morning"],
+    "responses": ["Hey", "Hi there!", "Greetings! How can I assist you?"]
+  },
+  {"class": "ending-conversation",
+    "words": [ "bye", "later"],
+    "responses": ["goodbye", "see you!"]
+  },
+  {"class": "payment method",
+    "words": ["what’s the most preferred payment option?"],
+    "responses": ["We accept MasterCard/ Visa/ PayPal", "Please let us know in case you want to bank transfer!"]
+  }
+
+]}
