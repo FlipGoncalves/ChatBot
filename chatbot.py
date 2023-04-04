@@ -55,25 +55,12 @@ class Chatbot:
         # Handle dataset path
         self.dataset_path = path
 
-        # # Handle english dataset
-        # self.english_questions = {}
-        # self.english_answers = {}
-        #
-        # # Handle portuguese dataset
-        # self.portuguese_questions = {}
-        # self.portuguese_answers = {}
-
         # Handle questions and answers
         self.questions = {}
         self.answers = {}
 
         # Handle all tokens
-        # self.english_token_words = {}
-        # self.portuguese_token_words = {}
         self.token_words = {}
-
-        # Handle number of documents
-        # self.n_documents = 0
 
         # Handle vector representation (for machine learning)
         self.vector_representation = None
@@ -126,6 +113,7 @@ class Chatbot:
 
     def add_token(self, token, words, language):
 
+        # Note: This approach allows for more languages later on
         if language not in self.token_words:
             self.token_words[language] = {}
 
@@ -137,17 +125,6 @@ class Chatbot:
 
     def add_question(self, intent, question, language):
 
-        # if language == 'english':
-        #     if intent not in self.english_questions:
-        #         self.english_questions[intent] = []
-        #     self.english_questions[intent].append(question)
-        #
-        # elif language == 'portuguese':
-        #     if intent not in self.portuguese_questions:
-        #         self.portuguese_questions[intent] = []
-        #     self.portuguese_questions[intent].append(question)
-
-        # Note: This approach allows for more languages later on
         if language not in self.questions:
             self.questions[language] = {}
 
@@ -158,17 +135,6 @@ class Chatbot:
 
     def add_answer(self, intent, answer, language):
 
-        # if language == 'english':
-        #     if intent not in self.english_answers:
-        #         self.english_answers[intent] = []
-        #     self.english_answers[intent].append(answer)
-        #
-        # elif language == 'portuguese':
-        #     if intent not in self.portuguese_answers:
-        #         self.portuguese_answers[intent] = []
-        #     self.portuguese_answers[intent].append(answer)
-
-        # Note: This approach allows for more languages later on
         if language not in self.answers:
             self.answers[language] = {}
 
@@ -254,8 +220,6 @@ class Chatbot:
 
     def obtain_input_tokens(self, tokenized_input, language):
 
-        # tokens = []  # Check if tokens are in database
-
         tokens = []
         for token in tokenized_input:
 
@@ -298,7 +262,7 @@ class Chatbot:
                 # Add possible corrections to tokens
                 tokens.append(possible_corrections)
 
-                # Choose a random correction
+                # Choose a random correction and add it to tokens
                 # correction = random.choice(possible_corrections)
                 # tokens.append(correction)
 
