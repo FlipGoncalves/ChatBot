@@ -1,67 +1,11 @@
 import json
-import math
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+import pandas as pd
+import nltk
 
 from tokenizer import Tokenizer
-
-
-def calculate_term_frequency(terms):
-    # Initialize term frequency
-    term_frequency = {}
-
-    # Count term frequency
-    for term in terms:
-        if term not in term_frequency:
-            term_frequency[term] = 0
-        term_frequency[term] += 1
-
-    return term_frequency
-
-
-def create_tf_idf_matrix(term_frequency_matrix, inverse_document_frequency_vector):
-
-    # Initialize tf-idf matrix
-    tf_idf_matrix = {}
-
-    # Calculate tf-idf for each document
-    for entry_id in term_frequency_matrix:
-
-        # Initialize tf-idf vector
-        tf_idf_vector = {}
-
-        # Calculate tf-idf for each term
-        for term in term_frequency_matrix[entry_id]:
-
-            # Calculate tf-idf
-            tf_idf = term_frequency_matrix[entry_id][term] * inverse_document_frequency_vector[term]
-
-            # Add tf-idf to tf-idf vector
-            tf_idf_vector[term] = tf_idf
-
-        # Add tf-idf vector to tf-idf matrix
-        tf_idf_matrix[entry_id] = tf_idf_vector
-
-    return tf_idf_matrix
-
-
-def create_vector_representation(tf_idf_matrix):
-
-    # Initialize vector representation
-    vector_representation = {}
-
-    # Create vector representation for each document
-    for entry_id in tf_idf_matrix:
-
-        # Initialize vector
-        vector = []
-
-        # Add tf-idf values to vector
-        for term in tf_idf_matrix[entry_id]:
-            vector.append(tf_idf_matrix[entry_id][term])
-
-        # Add vector to vector representation
-        vector_representation[entry_id] = vector
-
-    return vector_representation
 
 
 class Chatbot:
@@ -71,152 +15,141 @@ class Chatbot:
         # Handle tokenizer
         self.tokenizer = tokenizer
 
-        # Handle database
-        self.database_path = path
-        self.database = {}
+        # Handle dataset path
+        self.dataset_path = path
 
-        # Handle index
-        self.terms = {}
-        self.n_documents = 0
+        # Handle dataset
+        self.questions = {}
+        self.answers = {}
+
+        # Handle all tokens
+        self.tokens = {}
+
+        # Handle number of documents
+        # self.n_documents = 0
 
         # Handle vector representation (for machine learning)
         self.vector_representation = None
 
     def load_database(self):
 
-        with open(self.database_path, 'r') as file:
+        with open(self.dataset_path, 'r') as file:
 
             data = json.load(file)
             for entry in data:
 
-                # Obtain entry id
-                entry_id = entry['id']
+                # Obtain intent
+                intent = entry['intent']
 
-                # Obtain question
-                question = entry['question']
+                # Obtain questions
+                questions = entry['questions']
 
-                # Tokenize question
-                question_tokens = self.tokenizer.tokenize(question)
+                # Obtain english questions
+                english_questions = questions['english']
 
-                # Add question to index
-                for token in question_tokens:
-                    self.add_term(token, entry_id)
+                # Tokenize questions
+                tokenized_questions = [token for question in english_questions
+                                       for token in self.tokenizer.tokenize(question)]
 
-                # Obtain annotations
-                annotations = entry['annotations']
+                # Add questions to database
+                self.add_questions(intent, tokenized_questions)
 
-                for annotation in annotations:
+                # Keep track of question tokens
+                for token in tokenized_questions:
+                    self.add_token(intent, token)
 
-                    # Check annotation type (singleAnswer)
-                    if annotation['type'] == 'singleAnswer':
+                # Obtain answers
+                answers = entry['answers']
 
-                        # Obtain answer
-                        answer = annotation['answer']
+                # Obtain english answers
+                english_answers = answers['english']
 
-                        # Convert answer to string
-                        answer = '. '.join(answer)
+                # Add answers to database
+                self.add_answers(intent, english_answers)
 
-                        # Add entry to database
-                        self.add_database_entry(entry_id, question, answer)
+                # TODO: Keep track of answer tokens
 
-                    # Check annotation type (multipleAnswer)
-                    elif annotation['type'] == 'multipleQAs':
-
-                        # Obtain answers
-                        answers = annotation['qaPairs']
-
-                        # Obtain first answer
-                        answer = answers[0]
-
-                        # Convert answer to string
-                        answer = '. '.join(answer)
-
-                        # Add entry to database
-                        self.add_database_entry(entry_id, question, answer)
+                # Update number of documents
+                # self.n_documents += 1
 
             # Sort index terms
             self.sort_terms()
 
             # Prepare training data in Vector Representation
-            self.vector_representation = self.prepare_database()
+            # self.vector_representation = self.prepare_database()
 
-    def add_term(self, term, entry_id):
+    def add_token(self, intent, token):
+        if token not in self.tokens:
+            self.tokens[token] = set()
+        self.tokens[token].add(intent)
 
-        if term not in self.terms:
-            self.terms[term] = set()
-        self.terms[term].add(entry_id)
+    def add_questions(self, intent, questions):
+        self.questions[intent] = questions
 
-    def add_database_entry(self, entry_id, question, answer):
-        self.database[entry_id] = [question, answer]
+    def add_answers(self, intent, answers):
+        self.answers[intent] = answers
 
     def sort_terms(self):
-        self.terms = dict(sorted(self.terms.items()))
+        self.tokens = dict(sorted(self.tokens.items()))
 
     def prepare_database(self):
 
-        # Create term frequency matrix
-        term_frequency_matrix = self.create_term_frequency_matrix()
+        corpus = [question for intent in self.questions
+                  for question in self.questions[intent]]
 
-        # Create inverse document frequency vector
-        inverse_document_frequency_vector = self.create_inverse_document_frequency_vector()
+        tf_idf_model = TfidfVectorizer()
+        tf_idf_vector = tf_idf_model.fit_transform(corpus)
 
-        # Create tf-idf matrix
-        tf_idf_matrix = create_tf_idf_matrix(term_frequency_matrix, inverse_document_frequency_vector)
+        terms = tf_idf_model.get_feature_names_out()
+        tf_idf_array = tf_idf_vector.toarray()
 
-        # Create vector representation for each document
-        vector_representation = create_vector_representation(tf_idf_matrix)
+        df_tf_idf = pd.DataFrame(tf_idf_array, columns=terms)
+        print(df_tf_idf)
 
-        return vector_representation
+        return tf_idf_vector
 
-    def create_term_frequency_matrix(self):
+    def process_input(self, user_input):
 
-        # Initialize term frequency matrix
-        term_frequency_matrix = {}
+        # Tokenize input
+        tokenized_input = self.tokenizer.tokenize(user_input)
 
-        # Calculate term frequency for each document
-        for entry_id in self.database:
+        # Check if tokens are in database
+        for token in tokenized_input:
 
-            question, answer = self.database[entry_id]
+            # If token is not in database
+            if token not in self.tokens.keys():
+                print(f'Token "{token}" not found in database')
 
-            # Tokenize question
-            question_tokens = self.tokenizer.tokenize(question)
+                # TODO: Check token length before checking for similar tokens
 
-            # Calculate term frequency
-            question_term_frequency = calculate_term_frequency(question_tokens)
+                # Check if token was misspelled
+                for other_token in self.tokens.keys():
 
-            terms_frequency = {}
+                    # If token is 60% similar to other token
+                    if nltk.edit_distance(token, other_token) <= 0.4 * len(token):
+                        print(f'"{token}": Did you mean "{other_token}"?')
 
-            for term in self.terms.keys():
+            # If token is in database
+            else:
+                print(f'Token "{token}" found in database')
 
-                # Initialize term frequency
-                terms_frequency[term] = 0
+    def start(self):
 
-                # Check if term is in question
-                if term in question_term_frequency:
-                    terms_frequency[term] = question_term_frequency[term]
+        # Greet user
+        print('Hello, I am a chatbot. How can I help you?')
 
-            # Add term frequency vector to term frequency matrix
-            term_frequency_matrix[entry_id] = terms_frequency
+        # Start chatbot
+        while True:
 
-        return term_frequency_matrix
+            # Obtain user input
+            user_input = input('> ')
 
-    def create_inverse_document_frequency_vector(self):
+            # Check if user wants to exit
+            if user_input == 'exit':
+                break
 
-        # Initialize inverse document frequency vector
-        inverse_document_frequency_vector = {}
-
-        # Calculate inverse document frequency for each term
-        for term in self.terms:
-            inverse_document_frequency_vector[term] = len(self.terms[term])
-
-        # Calculate total number of documents
-        total_documents = len(self.database)
-
-        # Calculate inverse document frequency
-        for term in inverse_document_frequency_vector:
-            inverse_document_frequency_vector[term] = math.log10(total_documents / inverse_document_frequency_vector[term])
-
-        return inverse_document_frequency_vector
+            # Process input
+            self.process_input(user_input)
 
 
 if __name__ == '__main__':
@@ -225,9 +158,10 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(stopwords_path='stopwords.txt')
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/small_ambigNQ.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/sample_dataset.json')
 
     # Load database (training data)
     chatbot.load_database()
 
-    print(chatbot.vector_representation)
+    # Start chatbot
+    chatbot.start()
