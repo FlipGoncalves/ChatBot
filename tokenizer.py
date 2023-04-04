@@ -18,12 +18,14 @@ class Tokenizer(object):
         # Note: Better keep stopwords to improve the performance for simple sentences (e.g. "How are you?")
         # self.stopwords = load_stop_words(stopwords_path)
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> dict[str, list[str]]:
 
         # Split on whitespace
         initial_tokens = text.split()
 
-        tokens = []
+        # Keep track of possible words for each token
+        token_words = {}
+
         for token in initial_tokens:
 
             # Remove punctuation
@@ -34,8 +36,8 @@ class Tokenizer(object):
                 continue
 
             # Ignore tokens that don't meet the minimum size
-            if len(token) < self.min_token_size:
-                continue
+            # if len(token) < self.min_token_size:
+            #     continue
 
             # Remove stop words
             # if token in self.stopwords:
@@ -54,6 +56,10 @@ class Tokenizer(object):
                     token = self.stemmer.stem(token)
                     self.stemmer_cache[token] = token
 
-            tokens.append(token)
+            # Keep track of possible words for each token
+            if token not in token_words:
+                token_words[token] = []
 
-        return tokens
+            token_words[token].append(token)
+
+        return token_words

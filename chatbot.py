@@ -1,4 +1,6 @@
+import itertools
 import json
+# import random
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -6,6 +8,41 @@ import pandas as pd
 import nltk
 
 from tokenizer import Tokenizer
+
+
+def apply_corrections(tokens, is_question):
+
+    for i, token in enumerate(tokens):
+        print(f'[{i}] Did you mean: {" ".join(token)}{"?" if is_question else ""}')
+
+    selected = False
+    while not selected:
+
+        # Obtain user input
+        user_input = input('>> ')
+
+        # If user input is a number
+        if user_input.isdigit():
+
+            # Convert user input to integer
+            user_input = int(user_input)
+
+            # If user input is a valid index
+            if len(tokens) > user_input >= 0:
+
+                # Update tokens
+                tokens = tokens[user_input]
+
+                # Update selected
+                selected = True
+
+            else:
+                print('Invalid input. Please try again.')
+
+        else:
+            print('Invalid input. Please try again.')
+
+    return tokens
 
 
 class Chatbot:
@@ -18,12 +55,22 @@ class Chatbot:
         # Handle dataset path
         self.dataset_path = path
 
-        # Handle dataset
+        # # Handle english dataset
+        # self.english_questions = {}
+        # self.english_answers = {}
+        #
+        # # Handle portuguese dataset
+        # self.portuguese_questions = {}
+        # self.portuguese_answers = {}
+
+        # Handle questions and answers
         self.questions = {}
         self.answers = {}
 
         # Handle all tokens
-        self.tokens = {}
+        # self.english_token_words = {}
+        # self.portuguese_token_words = {}
+        self.token_words = {}
 
         # Handle number of documents
         # self.n_documents = 0
@@ -33,64 +80,119 @@ class Chatbot:
 
     def load_database(self):
 
-        with open(self.dataset_path, 'r') as file:
+        # Open dataset
+        with open(self.dataset_path, 'r', encoding='utf-8') as dataset:
 
-            data = json.load(file)
+            # Load dataset
+            data = json.load(dataset)
+
+            # Load all entries
             for entry in data:
 
-                # Obtain intent
-                intent = entry['intent']
+                # Load all languages
+                for language in entry['questions']:
+                    self.load_entry(entry, language)
 
-                # Obtain questions
-                questions = entry['questions']
+    def load_entry(self, entry: json, language: str):
 
-                # Obtain english questions
-                english_questions = questions['english']
+        # Obtain intent
+        intent = entry['intent']
 
-                # Tokenize questions
-                tokenized_questions = [token for question in english_questions
-                                       for token in self.tokenizer.tokenize(question)]
+        # Obtain questions
+        questions = entry['questions'][language]
 
-                # Add questions to database
-                self.add_questions(intent, tokenized_questions)
+        # Obtain answers
+        answers = entry['answers'][language]
 
-                # Keep track of question tokens
-                for token in tokenized_questions:
-                    self.add_token(intent, token)
+        for question in questions:
 
-                # Obtain answers
-                answers = entry['answers']
+            # Add questions to database
+            self.add_question(intent, question, language)
 
-                # Obtain english answers
-                english_answers = answers['english']
+            # Tokenize questions
+            question_tokens_words = self.tokenizer.tokenize(question)
 
-                # Add answers to database
-                self.add_answers(intent, english_answers)
+            # Add token words to database
+            for token in question_tokens_words:
+                self.add_token(token, question_tokens_words[token], language)
 
-                # TODO: Keep track of answer tokens
+        # Tokenize answers
+        for answer in answers:
 
-                # Update number of documents
-                # self.n_documents += 1
+            # Add answers to database
+            self.add_answer(intent, answer, language)
 
-            # Sort index terms
-            self.sort_terms()
+            # TODO: Keep track of answer tokens
 
-            # Prepare training data in Vector Representation
-            # self.vector_representation = self.prepare_database()
+    def add_token(self, token, words, language):
 
-    def add_token(self, intent, token):
-        if token not in self.tokens:
-            self.tokens[token] = set()
-        self.tokens[token].add(intent)
+        if language not in self.token_words:
+            self.token_words[language] = {}
 
-    def add_questions(self, intent, questions):
-        self.questions[intent] = questions
+        if token not in self.token_words[language]:
+            self.token_words[language][token] = set()
 
-    def add_answers(self, intent, answers):
-        self.answers[intent] = answers
+        for word in words:
+            self.token_words[language][token].add(word)
 
-    def sort_terms(self):
-        self.tokens = dict(sorted(self.tokens.items()))
+    def add_question(self, intent, question, language):
+
+        # if language == 'english':
+        #     if intent not in self.english_questions:
+        #         self.english_questions[intent] = []
+        #     self.english_questions[intent].append(question)
+        #
+        # elif language == 'portuguese':
+        #     if intent not in self.portuguese_questions:
+        #         self.portuguese_questions[intent] = []
+        #     self.portuguese_questions[intent].append(question)
+
+        # Note: This approach allows for more languages later on
+        if language not in self.questions:
+            self.questions[language] = {}
+
+        if intent not in self.questions[language]:
+            self.questions[language][intent] = []
+
+        self.questions[language][intent].append(question)
+
+    def add_answer(self, intent, answer, language):
+
+        # if language == 'english':
+        #     if intent not in self.english_answers:
+        #         self.english_answers[intent] = []
+        #     self.english_answers[intent].append(answer)
+        #
+        # elif language == 'portuguese':
+        #     if intent not in self.portuguese_answers:
+        #         self.portuguese_answers[intent] = []
+        #     self.portuguese_answers[intent].append(answer)
+
+        # Note: This approach allows for more languages later on
+        if language not in self.answers:
+            self.answers[language] = {}
+
+        if intent not in self.answers[language]:
+            self.answers[language][intent] = []
+
+        self.answers[language][intent].append(answer)
+
+    def detect_language(self, tokens):
+
+        languages_detected = {}
+        for language in self.token_words:
+
+            for token in tokens:
+                if token in self.token_words[language]:
+                    if language not in languages_detected:
+                        languages_detected[language] = 0
+                    languages_detected[language] += 1
+
+        if len(languages_detected) == 0:
+            print('[Language not detected]')
+            return None
+
+        return max(languages_detected, key=lambda key: languages_detected[key])
 
     def prepare_database(self):
 
@@ -108,30 +210,102 @@ class Chatbot:
 
         return tf_idf_vector
 
-    def process_input(self, user_input):
+    def process_input(self, user_input, is_question):
 
         # Tokenize input
         tokenized_input = self.tokenizer.tokenize(user_input)
 
-        # Check if tokens are in database
+        # Detect language
+        language = self.detect_language(tokenized_input)
+
+        # If language was not detected
+        if language is None:
+
+            # Initialize tokens
+            tokens = []
+
+            # Attempt all languages
+            for language_attempt in self.token_words:
+
+                temp_tokens = self.obtain_input_tokens(tokenized_input, language_attempt)
+
+                if len(temp_tokens) > len(tokens):
+
+                    # Update tokens and language
+                    tokens = temp_tokens
+                    language = language_attempt
+
+        else:
+
+            # Obtain input tokens with spelling check
+            tokens = self.obtain_input_tokens(tokenized_input, language)
+
+        if len(tokens) == 1:
+            tokens = tokens[0]
+
+        elif len(tokens) > 1:
+            tokens = apply_corrections(tokens, is_question)
+
+        if len(tokens) != 0:
+            print(f'Input for language {language.upper()}: {" ".join(tokens)}{"?" if is_question else ""}')
+            print(f'Language detected: {language.upper() if language is not None else "None"}')
+
+        return tokens
+
+    def obtain_input_tokens(self, tokenized_input, language):
+
+        # tokens = []  # Check if tokens are in database
+
+        tokens = []
         for token in tokenized_input:
 
-            # If token is not in database
-            if token not in self.tokens.keys():
-                print(f'Token "{token}" not found in database')
+            # If token is in database
+            if token in self.token_words[language]:
+                # tokens.append(token)
+                tokens.append([token])
 
-                # TODO: Check token length before checking for similar tokens
+            # If token is not in database
+            elif token not in self.token_words[language]:
+
+                print(f'Token "{token}" not found in database {language.upper()}')
+
+                # Token must be at least 4 characters long for spelling check
+                if len(token) < 3:
+
+                    print(f' * "{token}": Token too short to check spelling')
+                    continue
+
+                # Initialize possible corrections (spelling check)
+                possible_corrections = []
 
                 # Check if token was misspelled
-                for other_token in self.tokens.keys():
+                for other_token in self.token_words[language]:
 
                     # If token is 60% similar to other token
                     if nltk.edit_distance(token, other_token) <= 0.4 * len(token):
-                        print(f'"{token}": Did you mean "{other_token}"?')
 
-            # If token is in database
-            else:
-                print(f'Token "{token}" found in database')
+                        # print(f' * "{token}": Did you mean any of the following?')
+                        # print(f'   - {", ".join(self.token_words[language][other_token])}')
+
+                        # Add possible correction
+                        possible_corrections.append(other_token)
+
+                # If there are no possible corrections
+                if len(possible_corrections) == 0:
+                    print(f' * "{token}": No possible corrections found')
+                    continue
+
+                # Add possible corrections to tokens
+                tokens.append(possible_corrections)
+
+                # Choose a random correction
+                # correction = random.choice(possible_corrections)
+                # tokens.append(correction)
+
+        # Create combination of tokens
+        tokens = list(itertools.product(*tokens))
+
+        return tokens
 
     def start(self):
 
@@ -148,8 +322,12 @@ class Chatbot:
             if user_input == 'exit':
                 break
 
+            # Check if user input is empty
+            if not user_input:
+                continue
+
             # Process input
-            self.process_input(user_input)
+            self.process_input(user_input, user_input.endswith('?'))
 
 
 if __name__ == '__main__':
