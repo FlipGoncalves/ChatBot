@@ -1,0 +1,352 @@
+[
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "When did the Simpsons first air on television as an animated short on the Tracey Ullman Show?",
+            "answer": [
+              "April 19, 1987"
+            ]
+          },
+          {
+            "question": "When did the Simpsons first air as a half-hour prime time show?",
+            "answer": [
+              "December 17, 1989"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-4469503464110108318",
+    "question": "When did the simpsons first air on television?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "David Morse"
+        ]
+      }
+    ],
+    "id": "4790842463458965203",
+    "question": "Who played george washington in the john adams series?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "What is the legal age of marriage, without parental consent or other authorization, in all but two states in the usa?",
+            "answer": [
+              "18 years of age",
+              "18"
+            ]
+          },
+          {
+            "question": "What is the legal age of marriage, without parental consent or other authorization, in Nebraska?",
+            "answer": [
+              "19"
+            ]
+          },
+          {
+            "question": "What is the legal age of marriage, without parental consent or other authorization, in Mississippi?",
+            "answer": [
+              "21"
+            ]
+          },
+          {
+            "question": "What is youngest legal age of marriage possible in some US states when circumstances permit?",
+            "answer": [
+              "0"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-6631915997977101143",
+    "question": "What is the legal age of marriage in usa?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "Who starred in barefoot in the park on broadway as Corie Bratter?",
+            "answer": [
+              "Elizabeth Ashley"
+            ]
+          },
+          {
+            "question": "Who starred in barefoot in the park on broadway as Victor Velasco?",
+            "answer": [
+              "Kurt Kasznar"
+            ]
+          },
+          {
+            "question": "Who starred in barefoot in the park on broadway as Mrs. Banks?",
+            "answer": [
+              "Mildred Natwick"
+            ]
+          },
+          {
+            "question": "Who starred in barefoot in the park on broadway as Paul Bratter?",
+            "answer": [
+              "Robert Redford"
+            ]
+          },
+          {
+            "question": "Who starred in barefoot in the park on broadway as Telephone Man?",
+            "answer": [
+              "Herbert Edelman"
+            ]
+          },
+          {
+            "question": "Who starred in barefoot in the park on broadway as Delivery Man?",
+            "answer": [
+              "Joseph Keating"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-3098213414945179817",
+    "question": "Who starred in barefoot in the park on broadway?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "Based on the initial thoughts of the project, when did the Manhattan project begin and end?",
+            "answer": [
+              "Began 1939, end 1946"
+            ]
+          },
+          {
+            "question": "Based on when the project was being worked on, when did the Manhattan project begin and end?",
+            "answer": [
+              "Began 1942, end 1946"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-927805218867163489",
+    "question": "When did the manhattan project began and end?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "June 21, 2016"
+        ]
+      }
+    ],
+    "id": "-8765341210106443690",
+    "question": "When did the frozen ride open at epcot?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "Aravali Range, Satpura Range, Vindhyan Range"
+        ]
+      }
+    ],
+    "id": "-8984315366060644345",
+    "question": "Name the landforms that form the boundaries of the peninsular plateau?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "When was the last time UGA won a national football championship?",
+            "answer": [
+              "1980"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national gymnastics championship?",
+            "answer": [
+              "2009"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national baseball championship?",
+            "answer": [
+              "1990"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national golf championship?",
+            "answer": [
+              "2005"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national women's swimming and diving championship?",
+            "answer": [
+              "2016"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national track and field championship?",
+            "answer": [
+              "2018"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national tennis championship?",
+            "answer": [
+              "2019"
+            ]
+          },
+          {
+            "question": "When was the last time UGA won a national equestrian championship?",
+            "answer": [
+              "2014"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-3359151041540098032",
+    "question": "When was the last time uga won a national championship?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "Who sing play that funky music white boy in 1976?",
+            "answer": [
+              "Rob Parissi"
+            ]
+          },
+          {
+            "question": "Who sing play that funky music white boy in 1989?",
+            "answer": [
+              "Vanilla Ice"
+            ]
+          },
+          {
+            "question": "Who sing play that funky music white boy in 1988?",
+            "answer": [
+              "Roxanne"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "6601536662148726350",
+    "question": "Who sing play that funky music white boy?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "Bl\u00e9riot XI",
+          "Nieuport IV"
+        ]
+      }
+    ],
+    "id": "-4757397641844293607",
+    "question": "When was the first airplane used in war?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "clear blue",
+          "blue",
+          "deep-blue"
+        ]
+      }
+    ],
+    "id": "-6857918454805495301",
+    "question": "What color is a negative benedict's test?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "Consubstantial with the father in the creed means what in humanity?",
+            "answer": [
+              "common humanity which is shared by all human persons."
+            ]
+          },
+          {
+            "question": "What do translations  into English often say Consubstantial with the father in the creed means what?",
+            "answer": [
+              "of the same being"
+            ]
+          },
+          {
+            "question": "What do some English-speaking translators and authors still prefer  Consubstantial with the father in the creed means what?",
+            "answer": [
+              "nature of God in Christianity"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-4132174036373265970",
+    "question": "Consubstantial with the father in the creed means what?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "singleAnswer",
+        "answer": [
+          "All Shook Up"
+        ]
+      }
+    ],
+    "id": "1561260788294720798",
+    "question": "What was elvis presley's first uk number 1?"
+  },
+  {
+    "annotations": [
+      {
+        "type": "multipleQAs",
+        "qaPairs": [
+          {
+            "question": "Who was the voice of Kaa the snake in the 2016 film The Jungle Book?",
+            "answer": [
+              "Scarlett Johansson"
+            ]
+          },
+          {
+            "question": "Who was the voice of Kaa the snake in the 1967 film The Jungle Book?",
+            "answer": [
+              "Sterling Holloway"
+            ]
+          },
+          {
+            "question": "Who was the voice of Kaa in the Jungle Book TV series?",
+            "answer": [
+              "Joseph J Terry"
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "-3609553841261159056",
+    "question": "Voice of the snake in the jungle book?"
+  }
+]
