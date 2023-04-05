@@ -3,8 +3,9 @@ import json
 # import random
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neural_network import MLPClassifier
 
-import pandas as pd
+import numpy as np
 import nltk
 
 from tokenizer import Tokenizer
@@ -59,6 +60,13 @@ class Chatbot:
         self.questions = {}
         self.answers = {}
 
+        # Handle intents
+        self.intents = []
+
+        # Model
+        self.model = None
+        self.tf_idf_model = TfidfVectorizer()
+
         # Handle all tokens
         self.token_words = {}
 
@@ -92,6 +100,8 @@ class Chatbot:
         answers = entry['answers'][language]
 
         for question in questions:
+
+            if intent not in self.intents: self.intents.append(intent)
 
             # Add questions to database
             self.add_question(intent, question, language)
@@ -160,23 +170,31 @@ class Chatbot:
 
         return max(languages_detected, key=lambda key: languages_detected[key])
 
-    def prepare_database(self):
+    def train_model(self):
 
-        corpus = [question for intent in self.questions
-                  for question in self.questions[intent]]
+        corpus = []
+        tokens = []
+        for language in self.questions:
+            for question in self.questions[language]["NameQuery"]:
+                corpus.append(question)
+                tokens.extend(self.tokenizer.tokenize(question))
 
-        tf_idf_model = TfidfVectorizer()
-        tf_idf_vector = tf_idf_model.fit_transform(corpus)
+        self.tf_idf_model.fit_transform(corpus)
+        X_train = self.tf_idf_model.transform(tokens)
+        y_train = np.zeros((len(tokens), len(self.intents)))
 
-        terms = tf_idf_model.get_feature_names_out()
-        tf_idf_array = tf_idf_vector.toarray()
+        for i, tag in enumerate(self.intents):
+            y_train[i][self.intents.index(tag)] = 1
+        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='relu', solver='adam', max_iter=500)
+        self.model.fit(X_train, y_train)
 
-        df_tf_idf = pd.DataFrame(tf_idf_array, columns=terms)
-        print(df_tf_idf)
-
-        return tf_idf_vector
-
-    def process_input(self, user_input, is_question):
+    def predict_intent(self, message):
+        tokens = self.tokenize(message, message.endswith('?'))
+        message_vector = self.tf_idf_model.transform(tokens)
+        predicted_tag = self.intents[np.argmax(self.model.predict(message_vector))]
+        return predicted_tag
+    
+    def tokenize(self, user_input, is_question):
 
         # Tokenize input
         tokenized_input = self.tokenizer.tokenize(user_input)
@@ -284,6 +302,7 @@ class Chatbot:
 
             # Check if user wants to exit
             if user_input == 'exit':
+                print("Goodbye !!")
                 break
 
             # Check if user input is empty
@@ -291,7 +310,8 @@ class Chatbot:
                 continue
 
             # Process input
-            self.process_input(user_input, user_input.endswith('?'))
+            intent = self.predict_intent(user_input)
+            print(intent)
 
 
 if __name__ == '__main__':
@@ -304,6 +324,9 @@ if __name__ == '__main__':
 
     # Load database (training data)
     chatbot.load_database()
+
+    # train the model
+    chatbot.train_model()
 
     # Start chatbot
     chatbot.start()

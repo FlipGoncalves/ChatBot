@@ -18,7 +18,7 @@ class Tokenizer(object):
         # Note: Better keep stopwords to improve the performance for simple sentences (e.g. "How are you?")
         # self.stopwords = load_stop_words(stopwords_path)
 
-    def tokenize(self, text: str) -> dict[str, list[str]]:
+    def tokenize(self, text: str):
 
         # Split on whitespace
         initial_tokens = text.split()
