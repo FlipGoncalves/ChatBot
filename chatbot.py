@@ -1,67 +1,50 @@
+import itertools
 import json
-import math
+# import random
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neural_network import MLPClassifier
 
 from tokenizer import Tokenizer
 
-
-def calculate_term_frequency(terms):
-    # Initialize term frequency
-    term_frequency = {}
-
-    # Count term frequency
-    for term in terms:
-        if term not in term_frequency:
-            term_frequency[term] = 0
-        term_frequency[term] += 1
-
-    return term_frequency
+import numpy as np
+import nltk
+import random
 
 
-def create_tf_idf_matrix(term_frequency_matrix, inverse_document_frequency_vector):
+def apply_corrections(tokens, is_question):
 
-    # Initialize tf-idf matrix
-    tf_idf_matrix = {}
+    for i, token in enumerate(tokens):
+        print(f'[{i}] Did you mean: {" ".join(token)}{"?" if is_question else ""}')
 
-    # Calculate tf-idf for each document
-    for entry_id in term_frequency_matrix:
+    selected = False
+    while not selected:
 
-        # Initialize tf-idf vector
-        tf_idf_vector = {}
+        # Obtain user input
+        user_input = input('>> ')
 
-        # Calculate tf-idf for each term
-        for term in term_frequency_matrix[entry_id]:
+        # If user input is a number
+        if user_input.isdigit():
 
-            # Calculate tf-idf
-            tf_idf = term_frequency_matrix[entry_id][term] * inverse_document_frequency_vector[term]
+            # Convert user input to integer
+            user_input = int(user_input)
 
-            # Add tf-idf to tf-idf vector
-            tf_idf_vector[term] = tf_idf
+            # If user input is a valid index
+            if len(tokens) > user_input >= 0:
 
-        # Add tf-idf vector to tf-idf matrix
-        tf_idf_matrix[entry_id] = tf_idf_vector
+                # Update tokens
+                tokens = tokens[user_input]
 
-    return tf_idf_matrix
+                # Update selected
+                selected = True
 
+            else:
+                print('Invalid input. Please try again.')
 
-def create_vector_representation(tf_idf_matrix):
+        else:
+            print('Invalid input. Please try again.')
 
-    # Initialize vector representation
-    vector_representation = {}
-
-    # Create vector representation for each document
-    for entry_id in tf_idf_matrix:
-
-        # Initialize vector
-        vector = []
-
-        # Add tf-idf values to vector
-        for term in tf_idf_matrix[entry_id]:
-            vector.append(tf_idf_matrix[entry_id][term])
-
-        # Add vector to vector representation
-        vector_representation[entry_id] = vector
-
-    return vector_representation
+    return tokens
 
 
 class Chatbot:
@@ -71,152 +54,275 @@ class Chatbot:
         # Handle tokenizer
         self.tokenizer = tokenizer
 
-        # Handle database
-        self.database_path = path
-        self.database = {}
+        # Handle dataset path
+        self.dataset_path = path
 
-        # Handle index
-        self.terms = {}
-        self.n_documents = 0
+        # Handle questions and answers
+        self.questions = {}
+        self.answers = {}
+
+        # Handle intents
+        self.intents = []
+
+        # Model
+        self.model = None
+        self.tf_idf_model = TfidfVectorizer()
+
+        # Handle all tokens
+        self.token_words = {}
 
         # Handle vector representation (for machine learning)
         self.vector_representation = None
 
     def load_database(self):
 
-        with open(self.database_path, 'r') as file:
+        # Open dataset
+        with open(self.dataset_path, 'r', encoding='utf-8') as dataset:
 
-            data = json.load(file)
-            for entry in data:
+            # Load dataset
+            data = json.load(dataset)
 
-                # Obtain entry id
-                entry_id = entry['id']
+            # Load all entries
+            for entry in data["intents"]:
+                # Load all languages
+                self.load_entry(entry)
 
-                # Obtain question
-                question = entry['question']
+    def load_entry(self, entry: json):
 
-                # Tokenize question
-                question_tokens = self.tokenizer.tokenize(question)
+        # Obtain intent
+        intent = entry['intent']
 
-                # Add question to index
-                for token in question_tokens:
-                    self.add_term(token, entry_id)
+        # Obtain questions
+        questions = entry['text'][0]
 
-                # Obtain annotations
-                annotations = entry['annotations']
+        # Obtain answers
+        answers = entry['responses'][0]
 
-                for annotation in annotations:
+        for language in questions:
+            for question in questions[language]:
 
-                    # Check annotation type (singleAnswer)
-                    if annotation['type'] == 'singleAnswer':
+                if intent not in self.intents: self.intents.append(intent)
 
-                        # Obtain answer
-                        answer = annotation['answer']
+                # Add questions to database
+                self.add_question(intent, question, language)
 
-                        # Convert answer to string
-                        answer = '. '.join(answer)
+                # Tokenize questions
+                question_tokens_words = self.tokenizer.tokenize(question)
 
-                        # Add entry to database
-                        self.add_database_entry(entry_id, question, answer)
+                # Add token words to database
+                for token in question_tokens_words:
+                    self.add_token(token, question_tokens_words[token], language)
 
-                    # Check annotation type (multipleAnswer)
-                    elif annotation['type'] == 'multipleQAs':
+        # Tokenize answers
+        for language in answers:
+            for answer in answers[language]:
 
-                        # Obtain answers
-                        answers = annotation['qaPairs']
+                # Add answers to database
+                self.add_answer(intent, answer, language)
 
-                        # Obtain first answer
-                        answer = answers[0]
+                # TODO: Keep track of answer tokens
 
-                        # Convert answer to string
-                        answer = '. '.join(answer)
+    def add_token(self, token, words, language):
 
-                        # Add entry to database
-                        self.add_database_entry(entry_id, question, answer)
+        # Note: This approach allows for more languages later on
+        if language not in self.token_words:
+            self.token_words[language] = {}
 
-            # Sort index terms
-            self.sort_terms()
+        if token not in self.token_words[language]:
+            self.token_words[language][token] = set()
 
-            # Prepare training data in Vector Representation
-            self.vector_representation = self.prepare_database()
+        for word in words:
+            self.token_words[language][token].add(word)
 
-    def add_term(self, term, entry_id):
+    def add_question(self, intent, question, language):
 
-        if term not in self.terms:
-            self.terms[term] = set()
-        self.terms[term].add(entry_id)
+        if language not in self.questions:
+            self.questions[language] = {}
 
-    def add_database_entry(self, entry_id, question, answer):
-        self.database[entry_id] = [question, answer]
+        if intent not in self.questions[language]:
+            self.questions[language][intent] = []
 
-    def sort_terms(self):
-        self.terms = dict(sorted(self.terms.items()))
+        self.questions[language][intent].append(question)
 
-    def prepare_database(self):
+    def add_answer(self, intent, answer, language):
 
-        # Create term frequency matrix
-        term_frequency_matrix = self.create_term_frequency_matrix()
+        if language not in self.answers:
+            self.answers[language] = {}
 
-        # Create inverse document frequency vector
-        inverse_document_frequency_vector = self.create_inverse_document_frequency_vector()
+        if intent not in self.answers[language]:
+            self.answers[language][intent] = []
 
-        # Create tf-idf matrix
-        tf_idf_matrix = create_tf_idf_matrix(term_frequency_matrix, inverse_document_frequency_vector)
+        self.answers[language][intent].append(answer)
 
-        # Create vector representation for each document
-        vector_representation = create_vector_representation(tf_idf_matrix)
+    def detect_language(self, tokens):
 
-        return vector_representation
+        languages_detected = {}
+        for language in self.token_words:
 
-    def create_term_frequency_matrix(self):
+            for token in tokens:
+                if token in self.token_words[language]:
+                    if language not in languages_detected:
+                        languages_detected[language] = 0
+                    languages_detected[language] += 1
 
-        # Initialize term frequency matrix
-        term_frequency_matrix = {}
+        if len(languages_detected) == 0:
+            print('[Language not detected]')
+            return None
 
-        # Calculate term frequency for each document
-        for entry_id in self.database:
+        return max(languages_detected, key=lambda key: languages_detected[key])
 
-            question, answer = self.database[entry_id]
+    def train_model(self):
 
-            # Tokenize question
-            question_tokens = self.tokenizer.tokenize(question)
+        corpus = []
+        tokens = []
+        tags = []
+        for language in self.questions:
+            for intent in self.questions[language]:
+                for question in self.questions[language][intent]:
+                    corpus.append(question)
+                    tokens.extend(self.tokenizer.tokenize(question))
+                    tags.append(intent)
 
-            # Calculate term frequency
-            question_term_frequency = calculate_term_frequency(question_tokens)
+        self.tf_idf_model.fit_transform(tokens)
+        X_train = self.tf_idf_model.transform(corpus)
+        y_train = np.zeros((len(corpus), len(self.intents)))
 
-            terms_frequency = {}
+        for i, tag in enumerate(tags):
+            y_train[i][self.intents.index(tag)] = 1
+        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='lbfgs', max_iter=500)
+        self.model.fit(X_train, y_train)
 
-            for term in self.terms.keys():
+    def predict_intent(self, message):
 
-                # Initialize term frequency
-                terms_frequency[term] = 0
+        tokens, lang = self.tokenize(message, message.endswith('?'))
+        message_vector = self.tf_idf_model.transform([" ".join(tokens)])
+        predicted_tag = self.intents[np.argmax(self.model.predict(message_vector))]
 
-                # Check if term is in question
-                if term in question_term_frequency:
-                    terms_frequency[term] = question_term_frequency[term]
+        return predicted_tag, lang
+    
+    def tokenize(self, user_input, is_question):
 
-            # Add term frequency vector to term frequency matrix
-            term_frequency_matrix[entry_id] = terms_frequency
+        # Tokenize input
+        tokenized_input = self.tokenizer.tokenize(user_input)
 
-        return term_frequency_matrix
+        # Detect language
+        language = self.detect_language(tokenized_input)
 
-    def create_inverse_document_frequency_vector(self):
+        # If language was not detected
+        if language is None:
 
-        # Initialize inverse document frequency vector
-        inverse_document_frequency_vector = {}
+            # Initialize tokens
+            tokens = []
 
-        # Calculate inverse document frequency for each term
-        for term in self.terms:
-            inverse_document_frequency_vector[term] = len(self.terms[term])
+            # Attempt all languages
+            for language_attempt in self.token_words:
 
-        # Calculate total number of documents
-        total_documents = len(self.database)
+                temp_tokens = self.obtain_input_tokens(tokenized_input, language_attempt)
 
-        # Calculate inverse document frequency
-        for term in inverse_document_frequency_vector:
-            inverse_document_frequency_vector[term] = math.log10(total_documents / inverse_document_frequency_vector[term])
+                if len(temp_tokens) > len(tokens):
 
-        return inverse_document_frequency_vector
+                    # Update tokens and language
+                    tokens = temp_tokens
+                    language = language_attempt
+
+        else:
+
+            # Obtain input tokens with spelling check
+            tokens = self.obtain_input_tokens(tokenized_input, language)
+
+        if len(tokens) == 1:
+            tokens = tokens[0]
+
+        elif len(tokens) > 1:
+            tokens = apply_corrections(tokens, is_question)
+
+        # if len(tokens) != 0:
+        #     print(f'Input for language {language.upper()}: {" ".join(tokens)}{"?" if is_question else ""}')
+        #     print(f'Language detected: {language.upper() if language is not None else "None"}')
+
+        return tokens, language
+
+    def obtain_input_tokens(self, tokenized_input, language):
+
+        tokens = []
+        for token in tokenized_input:
+
+            # If token is in database
+            if token in self.token_words[language]:
+                # tokens.append(token)
+                tokens.append([token])
+
+            # If token is not in database
+            elif token not in self.token_words[language]:
+
+                print(f'Token "{token}" not found in database {language.upper()}')
+
+                # Token must be at least 4 characters long for spelling check
+                if len(token) < 3:
+
+                    print(f' * "{token}": Token too short to check spelling')
+                    continue
+
+                # Initialize possible corrections (spelling check)
+                possible_corrections = []
+
+                # Check if token was misspelled
+                for other_token in self.token_words[language]:
+
+                    # If token is 60% similar to other token
+                    if nltk.edit_distance(token, other_token) <= 0.4 * len(token):
+
+                        # print(f' * "{token}": Did you mean any of the following?')
+                        # print(f'   - {", ".join(self.token_words[language][other_token])}')
+
+                        # Add possible correction
+                        possible_corrections.append(other_token)
+
+                # If there are no possible corrections
+                if len(possible_corrections) == 0:
+                    print(f' * "{token}": No possible corrections found')
+                    continue
+
+                # Add possible corrections to tokens
+                tokens.append(possible_corrections)
+
+                # Choose a random correction and add it to tokens
+                # correction = random.choice(possible_corrections)
+                # tokens.append(correction)
+
+        # Create combination of tokens
+        tokens = list(itertools.product(*tokens))
+
+        return tokens
+
+    def start(self):
+
+        # Greet user
+        print('Hello, I am a chatbot. How can I help you?')
+
+        # Start chatbot
+        while True:
+
+            # Obtain user input
+            user_input = input('> ')
+
+            # Check if user wants to exit
+            if user_input == 'exit':
+                print("Goodbye !!")
+                break
+
+            # Check if user input is empty
+            if not user_input:
+                continue
+
+            # Process input
+            tag, language = self.predict_intent(user_input)
+
+            response = random.choice(self.answers[language][tag])
+
+            print(language, tag)
+
+            print(f"ChatBot: {response}")
 
 
 if __name__ == '__main__':
@@ -225,9 +331,13 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(stopwords_path='stopwords.txt')
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/small_ambigNQ.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
 
     # Load database (training data)
     chatbot.load_database()
 
-    print(chatbot.vector_representation)
+    # train the model
+    chatbot.train_model()
+
+    # Start chatbot
+    chatbot.start()
