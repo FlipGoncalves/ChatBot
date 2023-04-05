@@ -9,7 +9,7 @@ It supports the following features:
 
 - Split a sentence into tokens
 - Remove punctuation and special characters
-- Ignore words that don't meet a minimum length
+- Ignore words that don't meet a minimum length (optional)
 - Remove stop words (optional)
 - Normalize words to lowercase
 - Stem words 
