@@ -1115,6 +1115,151 @@
       },
       "entityType": "NA",
       "entities": []
+    },
+    {
+      "intent": "Likes",
+      "text": [
+        {
+          "english": [
+            "I like <LIKE>",
+            "I really like <LIKE>",
+            "I love <LIKE>",
+            "I adore <LIKE>"
+          ],
+          "portuguese": [
+            "Eu gosto de <LIKE>",
+            "Eu gosto imenso de <LIKE>",
+            "Eu adoro <LIKE>"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I like <LIKE>",
+            "I love <LIKE>",
+            "Thats cool",
+            "Same"
+          ],
+          "portuguese": [
+            "Eu gosto de <LIKE>",
+            "Eu adoro <LIKE>",
+            "Fixe"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gLikes.getLikes",
+        "entities": false,
+        "english": [
+          "I like %%LIKE%%",
+          "I love %%LIKE%%",
+          "Thats cool",
+          "Same"
+        ],
+        "portuguese": [
+          "Eu gosto de %%LIKE%%",
+          "Eu adoro %%LIKE%%",
+          "Fixe"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "Dislikes",
+      "text": [
+        {
+          "english": [
+            "I hate <DISLIKE>",
+            "I hate like <DISLIKE>",
+            "I don't like <DISLIKE>"
+          ],
+          "portuguese": [
+            "Eu não gosto de <DISLIKE>",
+            "Eu não gosto mesmo de <DISLIKE>",
+            "Eu detesto <DISLIKE>"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I hate <DISLIKE>",
+            "I don't like <DISLIKE>",
+            "Same"
+          ],
+          "portuguese": [
+            "Eu não gosto de <DISLIKE>",
+            "Eu detesto <DISLIKE>"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gDislikes.getDislikes",
+        "entities": false,
+        "english": [
+          "I hate %%DISLIKE%%",
+          "I don't like %%DISLIKE%%",
+          "Same"
+        ],
+        "portuguese": [
+          "Eu não gosto de %%DISLIKE%%",
+          "Eu detesto %%DISLIKE%%"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "AdvanceLikes",
+      "text": [
+        {
+          "english": [
+            "I <ADVANCELIKE>"
+          ],
+          "portuguese": [
+            "Eu <ADVANCELIKE>"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I <ADVANCELIKE> too"
+          ],
+          "portuguese": [
+            "Eu também <ADVANCELIKE>"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gAdvanceLikes.checkLikes",
+        "entities": false,
+        "english": [
+          "I <ADVANCELIKE> too"
+        ],
+        "portuguese": [
+          "Eu também <ADVANCELIKE>"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
     }
   ]
 }
