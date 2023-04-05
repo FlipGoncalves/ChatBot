@@ -5,10 +5,11 @@ import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neural_network import MLPClassifier
 
+from tokenizer import Tokenizer
+
 import numpy as np
 import nltk
-
-from tokenizer import Tokenizer
+import random
 
 
 def apply_corrections(tokens, is_question):
@@ -82,44 +83,44 @@ class Chatbot:
             data = json.load(dataset)
 
             # Load all entries
-            for entry in data:
-
+            for entry in data["intents"]:
                 # Load all languages
-                for language in entry['questions']:
-                    self.load_entry(entry, language)
+                self.load_entry(entry)
 
-    def load_entry(self, entry: json, language: str):
+    def load_entry(self, entry: json):
 
         # Obtain intent
         intent = entry['intent']
 
         # Obtain questions
-        questions = entry['questions'][language]
+        questions = entry['text'][0]
 
         # Obtain answers
-        answers = entry['answers'][language]
+        answers = entry['responses'][0]
 
-        for question in questions:
+        for language in questions:
+            for question in questions[language]:
 
-            if intent not in self.intents: self.intents.append(intent)
+                if intent not in self.intents: self.intents.append(intent)
 
-            # Add questions to database
-            self.add_question(intent, question, language)
+                # Add questions to database
+                self.add_question(intent, question, language)
 
-            # Tokenize questions
-            question_tokens_words = self.tokenizer.tokenize(question)
+                # Tokenize questions
+                question_tokens_words = self.tokenizer.tokenize(question)
 
-            # Add token words to database
-            for token in question_tokens_words:
-                self.add_token(token, question_tokens_words[token], language)
+                # Add token words to database
+                for token in question_tokens_words:
+                    self.add_token(token, question_tokens_words[token], language)
 
         # Tokenize answers
-        for answer in answers:
+        for language in answers:
+            for answer in answers[language]:
 
-            # Add answers to database
-            self.add_answer(intent, answer, language)
+                # Add answers to database
+                self.add_answer(intent, answer, language)
 
-            # TODO: Keep track of answer tokens
+                # TODO: Keep track of answer tokens
 
     def add_token(self, token, words, language):
 
@@ -174,25 +175,30 @@ class Chatbot:
 
         corpus = []
         tokens = []
+        tags = []
         for language in self.questions:
-            for question in self.questions[language]["NameQuery"]:
-                corpus.append(question)
-                tokens.extend(self.tokenizer.tokenize(question))
+            for intent in self.questions[language]:
+                for question in self.questions[language][intent]:
+                    corpus.append(question)
+                    tokens.extend(self.tokenizer.tokenize(question))
+                    tags.append(intent)
 
-        self.tf_idf_model.fit_transform(corpus)
-        X_train = self.tf_idf_model.transform(tokens)
-        y_train = np.zeros((len(tokens), len(self.intents)))
+        self.tf_idf_model.fit_transform(tokens)
+        X_train = self.tf_idf_model.transform(corpus)
+        y_train = np.zeros((len(corpus), len(self.intents)))
 
-        for i, tag in enumerate(self.intents):
+        for i, tag in enumerate(tags):
             y_train[i][self.intents.index(tag)] = 1
-        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='relu', solver='adam', max_iter=500)
+        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='lbfgs', max_iter=500)
         self.model.fit(X_train, y_train)
 
     def predict_intent(self, message):
-        tokens = self.tokenize(message, message.endswith('?'))
-        message_vector = self.tf_idf_model.transform(tokens)
+
+        tokens, lang = self.tokenize(message, message.endswith('?'))
+        message_vector = self.tf_idf_model.transform([" ".join(tokens)])
         predicted_tag = self.intents[np.argmax(self.model.predict(message_vector))]
-        return predicted_tag
+
+        return predicted_tag, lang
     
     def tokenize(self, user_input, is_question):
 
@@ -230,11 +236,11 @@ class Chatbot:
         elif len(tokens) > 1:
             tokens = apply_corrections(tokens, is_question)
 
-        if len(tokens) != 0:
-            print(f'Input for language {language.upper()}: {" ".join(tokens)}{"?" if is_question else ""}')
-            print(f'Language detected: {language.upper() if language is not None else "None"}')
+        # if len(tokens) != 0:
+        #     print(f'Input for language {language.upper()}: {" ".join(tokens)}{"?" if is_question else ""}')
+        #     print(f'Language detected: {language.upper() if language is not None else "None"}')
 
-        return tokens
+        return tokens, language
 
     def obtain_input_tokens(self, tokenized_input, language):
 
@@ -310,8 +316,13 @@ class Chatbot:
                 continue
 
             # Process input
-            intent = self.predict_intent(user_input)
-            print(intent)
+            tag, language = self.predict_intent(user_input)
+
+            response = random.choice(self.answers[language][tag])
+
+            print(language, tag)
+
+            print(f"ChatBot: {response}")
 
 
 if __name__ == '__main__':
@@ -320,7 +331,7 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(stopwords_path='stopwords.txt')
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/sample_dataset.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
 
     # Load database (training data)
     chatbot.load_database()
