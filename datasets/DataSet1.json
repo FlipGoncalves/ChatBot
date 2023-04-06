@@ -1115,6 +1115,411 @@
       },
       "entityType": "NA",
       "entities": []
+    },
+    {
+      "intent": "Likes",
+      "text": [
+        {
+          "english": [
+            "I like cats",
+            "I like dogs",
+            "I love cats",
+            "I love dogs"
+          ],
+          "portuguese": [
+            "Eu gosto de gatos",
+            "Eu gosto de cães",
+            "Eu adoro gatos",
+            "Eu adoro cães"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I like <LIKE>",
+            "I love <LIKE>",
+            "Thats cool",
+            "Same"
+          ],
+          "portuguese": [
+            "Eu gosto de <LIKE>",
+            "Eu adoro <LIKE>",
+            "Fixe"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gLikes.getLikes",
+        "entities": false,
+        "english": [
+          "I like %%LIKE%%",
+          "I love %%LIKE%%"
+        ],
+        "portuguese": [
+          "Eu gosto de %%LIKE%%",
+          "Eu adoro %%LIKE%%"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "SharedLikes",
+      "text": [
+        {
+          "english": [
+            "I like <LIKE>",
+            "I really like <LIKE>",
+            "I love <LIKE>",
+            "I adore <LIKE>"
+          ],
+          "portuguese": [
+            "Eu gosto de <LIKE>",
+            "Eu gosto imenso de <LIKE>",
+            "Eu adoro <LIKE>"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I also like <SHAREDLIKES>"
+          ],
+          "portuguese": [
+            "Eu também gosto <SHAREDLIKES>"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gSharedLikes.checkLikes",
+        "entities": false,
+        "english": [
+          "I also like <SHAREDLIKES>"
+        ],
+        "portuguese": [
+          "Eu também gosto <SHAREDLIKES>"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    
+    {
+      "intent": "Dislikes",
+      "text": [
+        {
+          "english": [
+            "I hate broccoli",
+            "I dislike broccoli",
+            "I don't like broccoli"
+          ],
+          "portuguese": [
+            "Eu não gosto de brocolos",
+            "Eu não gosto mesmo de brocolos",
+            "Eu detesto brocolos"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I hate <DISLIKE>",
+            "I don't like <DISLIKE>",
+            "Same"
+          ],
+          "portuguese": [
+            "Eu não gosto de <DISLIKE>",
+            "Eu detesto <DISLIKE>"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "extensions.gDislikes.getDislikes",
+        "entities": false,
+        "english": [
+          "I hate %%DISLIKE%%",
+          "I don't like %%DISLIKE%%"
+        ],
+        "portuguese": [
+          "Eu não gosto de %%DISLIKE%%",
+          "Eu detesto %%DISLIKE%%"
+        ]
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+
+    {
+      "intent": "BotLikes",
+      "text": [
+        {
+          "english": [
+            "Do you like cats?",
+            "Do you love cats?",
+            "Do you like dogs?",
+            "Do you love dogs?"
+          ],
+          "portuguese": [
+            "Gostas de gatos?",
+            "Gostas de cães?"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I do!",
+            "Yes, I like them"
+          ],
+          "portuguese": [
+            "Sim!",
+            "Gosto muito deles"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "BotDislikes",
+      "text": [
+        {
+          "english": [
+            "Do you dislike brocoli?",
+            "Do you hate brocoli?",
+            "You don't like brocoli do you?"
+          ],
+          "portuguese": [
+            "Não gostas de brocolos?",
+            "Gostas de brocolos?"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I do!",
+            "Yes, I hate them"
+          ],
+          "portuguese": [
+            "Não, não gosto!",
+            "Não, detesto brocolos"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "Hobbies",
+      "text": [
+        {
+          "english": [
+            "What do you do on your free time?",
+            "What do you like to do?",
+            "What do you do when you aren't chatting?"
+          ],
+          "portuguese": [
+            "O que gostas de fazer?",
+            "O que fazes no teu tempo livre?",
+            "O que fazes quando não estás a falar com alguém?"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I mine dogecoin!",
+            "Hack into your camera",
+            "Play Minesweeper"
+          ],
+          "portuguese": [
+            "Mino dogecoing!",
+            "Hackeio a tua câmara",
+            "Jogo Pong"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "Bored",
+      "text": [
+        {
+          "english": [
+            "I'm bored, what should i do?",
+            "I'm bored, got any ideas?",
+            "Tell something to do, i'm bored"
+          ],
+          "portuguese": [
+            "Estou aborrecido, o que posso fazer?",
+            "Estou aborrecido, diz algo que possa fazer"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "Watch me play Tetris",
+            "Watch some YouTube",
+            "Let's go for a walk"
+          ],
+          "portuguese": [
+            "Vê-me a jogar Tetris",
+            "Vê YouTube",
+            "Bora passear"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "Walk",
+      "text": [
+        {
+          "english": [
+            "You can go for walks?",
+            "How do we go on a walk?"
+          ],
+          "portuguese": [
+            "Consegues ir passear?",
+            "Como é que vamos passear?"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I don't know you tell me",
+            "You could build me a body",
+            "... I forgot I can't walk ... ;("
+          ],
+          "portuguese": [
+            "Sei lá, diz me tu",
+            "Podias-me montar um corpo",
+            "... eu esqueci-me que não posso andar ... ;("
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "Games",
+      "text": [
+        {
+          "english": [
+            "What games can you play?",
+            "Do you know how to play games?",
+            "What games have you played?"
+          ],
+          "portuguese": [
+            "Que jogos sabes jogar?",
+            "Consegues jogar algum jogo?",
+            "Que jogos já jogaste?"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I can play Pong ... it's very hard",
+            "I can play Tetris, wanna see?",
+            "I have the highscore in Snake"
+          ],
+          "portuguese": [
+            "Eu sei jogar Pong ... é muito complicado",
+            "Eu sei jogar Tetris, queres ver?",
+            "Eu tenho o highscore no Snake"
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
     }
   ]
 }
