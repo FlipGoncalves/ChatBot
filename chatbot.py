@@ -1,5 +1,8 @@
 import itertools
 import json
+import numpy as np
+import nltk
+import random
 # import random
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -7,9 +10,8 @@ from sklearn.neural_network import MLPClassifier
 
 from tokenizer import Tokenizer
 
-import numpy as np
-import nltk
-import random
+# nltk.download('wordnet')
+# nltk.download('stopwords')
 
 
 def apply_corrections(tokens, is_question):
@@ -328,7 +330,10 @@ class Chatbot:
 if __name__ == '__main__':
 
     # Prepare tokenizer
-    tokenizer = Tokenizer(stopwords_path='stopwords.txt')
+    tokenizer = Tokenizer(stemmer=nltk.stem.PorterStemmer())
+
+    # Alternative:
+    # tokenizer = Tokenizer(lemmatizer=nltk.stem.WordNetLemmatizer())
 
     # Prepare chatbot
     chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
