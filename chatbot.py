@@ -330,7 +330,7 @@ class Chatbot:
 if __name__ == '__main__':
 
     # Prepare tokenizer
-    tokenizer = Tokenizer(stemmer=nltk.stem.PorterStemmer())
+    tokenizer = Tokenizer(min_token_size=2, stemmer=nltk.stem.PorterStemmer())
 
     # Alternative:
     # tokenizer = Tokenizer(lemmatizer=nltk.stem.WordNetLemmatizer())
