@@ -96,6 +96,34 @@ class Chatbot:
                 # Load all languages
                 self.load_entry(entry)
 
+    def load_dataset(self, dataset):
+        # Open dataset
+        with open(dataset, 'r', encoding='utf-8') as db:
+
+            # Load dataset
+            data = json.load(db)
+
+            # Load all entries
+            for language, values in data["questions"].items():
+                for intent, questions in values.items():
+                    for qst in questions:
+
+                        if intent not in self.intents: self.intents.append(intent)
+
+                        self.add_question(intent, qst, language)
+                        # Tokenize questions
+                        question_tokens_words = self.tokenizer.tokenize(qst)
+
+                        # Add token words to database
+                        for token in question_tokens_words:
+                            self.add_token(token, question_tokens_words[token], language)
+
+            for language, values in data["answers"].items():
+                for intent, answers in values.items():
+                    for answ in answers:
+                        self.add_answer(intent, answ, language)
+
+
     def load_entry(self, entry: json):
 
         # Obtain intent
@@ -353,13 +381,16 @@ class Chatbot:
                 if user_input == 'exit':
                     print("Goodbye / Adeus !!")
                     break
-                
+
                 new_tag = "UserInput"+str(self.count)
+                self.count += 1
+                while new_tag in self.intents:
+                    new_tag = "UserInput"+str(self.count)
+                    self.count += 1
 
                 self.intents.append(new_tag)
                 self.add_question(new_tag, self.last_question, self.last_lang)
                 self.add_answer(new_tag, user_input, self.last_lang)
-                self.count += 1
                 self.last_tag = new_tag
 
                 question_tokens_words = self.tokenizer.tokenize(self.last_question)
@@ -406,7 +437,8 @@ if __name__ == '__main__':
     chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
 
     # Load database (training data)
-    chatbot.load_database()
+    # chatbot.load_database()
+    chatbot.load_dataset("datasets/DataSetSave.json")
 
     # train the model
     chatbot.train_model()
