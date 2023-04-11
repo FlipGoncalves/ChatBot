@@ -219,7 +219,7 @@ class Chatbot:
 
         return max(languages_detected, key=lambda key: languages_detected[key])
 
-    def train_model(self, max_iter=500):
+    def train_model(self, max_iter=1000):
 
         corpus = []
         tokens = []
@@ -388,20 +388,20 @@ class Chatbot:
                     new_tag = "UserInput"+str(self.count)
                     self.count += 1
 
+                question_tokens_words = self.tokenizer.tokenize(self.last_question)
+                # Add token words to database
+                for token in question_tokens_words:
+                    self.add_token(token, question_tokens_words[token], self.last_lang)
+
                 self.intents.append(new_tag)
                 self.add_question(new_tag, self.last_question, self.last_lang)
                 self.add_answer(new_tag, user_input, self.last_lang)
                 self.last_tag = new_tag
 
-                question_tokens_words = self.tokenizer.tokenize(self.last_question)
-                # Add token words to database
-                for token in question_tokens_words:
-                    self.add_token(token, question_tokens_words[token], language)
-
                 print("Thank you for your help / Obrigado pela ajuda !!")
 
                 # train the model
-                chatbot.train_model(max_iter=1000)
+                chatbot.train_model(max_iter=1200)
 
             else:
                 print(language, tag)
@@ -417,7 +417,7 @@ class Chatbot:
                     self.add_question(tag, user_input, language)
 
                     # train the model
-                    chatbot.train_model(max_iter=1000)
+                    chatbot.train_model(max_iter=1200)
 
     def saveDataset(self):
         print("Saving new dataset...")
@@ -437,8 +437,8 @@ if __name__ == '__main__':
     chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
 
     # Load database (training data)
-    # chatbot.load_database()
-    chatbot.load_dataset("datasets/DataSetSave.json")
+    chatbot.load_database()
+    # chatbot.load_dataset("datasets/DataSetSave.json")
 
     # train the model
     chatbot.train_model()
