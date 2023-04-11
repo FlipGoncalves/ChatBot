@@ -76,6 +76,13 @@ class Chatbot:
         # Handle vector representation (for machine learning)
         self.vector_representation = None
 
+        # handle error in model
+        self.last_tag = ""
+        self.last_question = ""
+        self.last_lang = ""
+        self.count = 0
+        self.all_questions = []
+
     def load_database(self):
 
         # Open dataset
@@ -146,6 +153,17 @@ class Chatbot:
 
         self.questions[language][intent].append(question)
 
+        question_tokens = self.tokenizer.tokenize(question)
+        self.all_questions.append("".join([x[0] for x in question_tokens.values()]))
+
+    def remove_question(self, intent, question, language):
+
+        try:
+            index = self.questions[language][intent].index(question)
+            del self.questions[language][intent][index]
+        except ValueError:
+            pass
+
     def add_answer(self, intent, answer, language):
 
         if language not in self.answers:
@@ -173,7 +191,7 @@ class Chatbot:
 
         return max(languages_detected, key=lambda key: languages_detected[key])
 
-    def train_model(self):
+    def train_model(self, max_iter=500):
 
         corpus = []
         tokens = []
@@ -191,7 +209,7 @@ class Chatbot:
 
         for i, tag in enumerate(tags):
             y_train[i][self.intents.index(tag)] = 1
-        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='lbfgs', max_iter=500)
+        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='lbfgs', max_iter=max_iter)
         self.model.fit(X_train, y_train)
 
     def predict_intent(self, message):
@@ -300,7 +318,7 @@ class Chatbot:
     def start(self):
 
         # Greet user
-        print('Hello, I am a chatbot. How can I help you?')
+        print('Hello, I am a Chatty. How can I help you ?\nOlá, eu sou o Chatty. Como posso ajudar ?')
 
         # Start chatbot
         while True:
@@ -310,7 +328,8 @@ class Chatbot:
 
             # Check if user wants to exit
             if user_input == 'exit':
-                print("Goodbye !!")
+                print("Goodbye / Adeus !!")
+                self.saveDataset()
                 break
 
             # Check if user input is empty
@@ -322,9 +341,57 @@ class Chatbot:
 
             response = random.choice(self.answers[language][tag])
 
-            print(language, tag)
+            if tag == "NotCorrect":
+                self.remove_question(self.last_tag, self.last_question, self.last_lang)
 
-            print(f"ChatBot: {response}")
+                print(f"Chatty: {response}{self.last_question}")
+
+                # Obtain user input
+                user_input = input('> ')
+
+                # Check if user wants to exit
+                if user_input == 'exit':
+                    print("Goodbye / Adeus !!")
+                    break
+                
+                new_tag = "UserInput"+str(self.count)
+
+                self.intents.append(new_tag)
+                self.add_question(new_tag, self.last_question, self.last_lang)
+                self.add_answer(new_tag, user_input, self.last_lang)
+                self.count += 1
+                self.last_tag = new_tag
+
+                question_tokens_words = self.tokenizer.tokenize(self.last_question)
+                # Add token words to database
+                for token in question_tokens_words:
+                    self.add_token(token, question_tokens_words[token], language)
+
+                print("Thank you for your help / Obrigado pela ajuda !!")
+
+                # train the model
+                chatbot.train_model(max_iter=1000)
+
+            else:
+                print(language, tag)
+                print(f"Chatty: {response}")
+
+                self.last_question = user_input
+                self.last_tag = tag
+                self.last_lang = language
+
+                question_tokens = self.tokenizer.tokenize(user_input)
+
+                if question_tokens not in self.all_questions:
+                    self.add_question(tag, user_input, language)
+
+                    # train the model
+                    chatbot.train_model(max_iter=1000)
+
+    def saveDataset(self):
+        print("Saving new dataset...")
+        with open("datasets/DataSetSave.json", "w") as f:
+            json.dump({"questions": self.questions, "answers": self.answers}, f)
 
 
 if __name__ == '__main__':
