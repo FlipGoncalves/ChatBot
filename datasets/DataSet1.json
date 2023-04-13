@@ -2,7 +2,7 @@
   "intents": [
     {
       "intent": "Greeting",
-      "text": [
+      "text":
         {
           "english": [
             "Hi",
@@ -19,8 +19,8 @@
             "Oi"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Hi human, please tell me your GeniSys user",
@@ -32,10 +32,11 @@
             "Ei humano, por favo indique o seu GeniSys user"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -49,7 +50,7 @@
     },
     {
       "intent": "GreetingResponse",
-      "text": [
+      "text":
         {
           "english": [
             "My user is Adam",
@@ -70,8 +71,8 @@
             "É Bella"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Great! Hi <HUMAN>! How can I help?",
@@ -85,10 +86,11 @@
             "OK! Olá <HUMAN>, como posso te ajudar?"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gHumans.updateHuman",
         "entities": true,
+        "tag": "<HUMAN>",
         "english": [
           "Hi %%HUMAN%%! How can I help?",
           "Hi %%HUMAN%%, how can I help you?",
@@ -152,7 +154,7 @@
     },
     {
       "intent": "CourtesyGreeting",
-      "text": [
+      "text":
         {
           "english": [
             "How are you?",
@@ -170,8 +172,8 @@
             "Olá, tudo bem?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Hello, I am great, how are you?",
@@ -187,10 +189,11 @@
             "Olá, eu estou bem obrigado, e tu?"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -204,7 +207,7 @@
     },
     {
       "intent": "CourtesyGreetingResponse",
-      "text": [
+      "text":
         {
           "english": [
             "Good thanks!",
@@ -216,8 +219,8 @@
             "Estou ótima, obrigado"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Great! Hi <HUMAN>! How can I help?",
@@ -231,10 +234,11 @@
             "OK! Olá <HUMAN>, como posso te ajudar?"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gHumans.updateHuman",
         "entities": true,
+        "tag": "<HUMAN>",
         "english": [
           "Great %%HUMAN%%! How can I help?",
           "Good %%HUMAN%%, how can I help you?",
@@ -298,7 +302,7 @@
     },
     {
       "intent": "CurrentHumanQuery",
-      "text": [
+      "text":
         {
           "english": [
             "What is my name?",
@@ -314,8 +318,8 @@
             "Como me chamo?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "You are <HUMAN>! How can I help?",
@@ -330,10 +334,11 @@
             "<HUMAM>, como posso ajudar?"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gHumans.getCurrentHuman",
         "entities": false,
+        "tag": "<HUMAN>",
         "english": [
           "You are %%HUMAN%%! How can I help?",
           "Your name is  %%HUMAN%%, how can I help you?",
@@ -357,7 +362,7 @@
     },
     {
       "intent": "NameQuery",
-      "text": [
+      "text":
         {
           "english": [
             "What is your name?",
@@ -372,8 +377,8 @@
             "Qual é o teu nome?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "You can call me Geni",
@@ -385,10 +390,11 @@
             "O meu nome é Geni"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -402,7 +408,7 @@
     },
     {
       "intent": "RealNameQuery",
-      "text": [
+      "text":
         {
           "english": [
             "What is your real name?",
@@ -416,8 +422,8 @@
             "Qual é o teu nome completo?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "My name is GeniSys",
@@ -429,10 +435,11 @@
             "GeniSys"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -446,7 +453,7 @@
     },
     {
       "intent": "TimeQuery",
-      "text": [
+      "text":
         {
           "english": [
             "What is the time?",
@@ -464,8 +471,8 @@
             "Diz me que horas são, por favor"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "One moment",
@@ -478,10 +485,11 @@
             "Só um bocadinho"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gTime.getTime",
         "entities": false,
+        "tag": "<TIME>",
         "english": [
           "The time is %%TIME%%",
           "Right now it is %%TIME%%",
@@ -502,7 +510,7 @@
     },
     {
       "intent": "Thanks",
-      "text": [
+      "text":
         {
           "english": [
             "OK thank you",
@@ -520,8 +528,8 @@
             "Muito obrigado"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "No problem!",
@@ -534,10 +542,11 @@
             "Foi um prazer"            
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -551,7 +560,7 @@
     },
     {
       "intent": "NotTalking2U",
-      "text": [
+      "text":
         {
           "english": [
             "I am not talking to you",
@@ -568,8 +577,8 @@
             "Não era para ti"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "OK",
@@ -581,10 +590,11 @@
             "Sem problema"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -598,7 +608,7 @@
     },
     {
       "intent": "UnderstandQuery",
-      "text": [
+      "text":
         {
           "english": [
             "Do you understand what I am saying",
@@ -614,8 +624,8 @@
             "Sabes o que estou a dizer?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Well I would not be a very clever AI if I did not would I?",
@@ -628,10 +638,11 @@
             "Claro que sim"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -644,7 +655,7 @@
     },
     {
       "intent": "Shutup",
-      "text": [
+      "text":
         {
           "english": [
             "Be quiet",
@@ -662,8 +673,8 @@
             "Silencio"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I am sorry to disturb you",
@@ -674,10 +685,11 @@
             "Peço desculpa"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -691,7 +703,7 @@
     },
     {
       "intent": "Swearing",
-      "text": [
+      "text":
         {
           "english": [
             "fuck off",
@@ -705,8 +717,8 @@
             "fodasse"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Please do not swear",
@@ -718,10 +730,11 @@
             "Que linguagem"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -735,7 +748,7 @@
     },
     {
       "intent": "GoodBye",
-      "text": [
+      "text":
         {
           "english": [
             "Bye",
@@ -749,8 +762,8 @@
             "Tchau"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "See you later",
@@ -762,10 +775,11 @@
             "Adeus! Até à próxima"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -779,7 +793,7 @@
     },
     {
       "intent": "CourtesyGoodBye",
-      "text": [
+      "text":
         {
           "english": [
             "Thanks, bye",
@@ -795,8 +809,8 @@
             "Obrigado, tchau"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "No problem, goodbye",
@@ -808,10 +822,11 @@
             "Adeus! Até à próxima"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -825,7 +840,7 @@
     },
     {
       "intent": "WhoAmI",
-      "text": [
+      "text":
         {
           "english": [
             "Can you see me?",
@@ -841,8 +856,8 @@
             "Quem sou eu?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Let me see",
@@ -853,10 +868,11 @@
             "Por favor olhe para a câmara"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gHumans.getHumanByFace",
         "entities": false,
+        "tag": "<HUMAN>",
         "english": [
           "Hi %%HUMAN%%, how are you?",
           "I believe you are %%HUMAN%%, how are you?",
@@ -877,7 +893,7 @@
     },
     {
       "intent": "Clever",
-      "text": [
+      "text":
         {
           "english": [
             "You are very clever",
@@ -893,8 +909,8 @@
             "És muito inteligente"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Thank you, I was trained that way",
@@ -905,10 +921,11 @@
             "Obrigado, treinei muito"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -922,7 +939,7 @@
     },
     {
       "intent": "Jokes",
-      "text": [
+      "text":
         {
           "english": [
             "Tell me a joke",
@@ -937,8 +954,8 @@
             "Sabes alguma piada"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I met a Dutch girl with inflatable shoes last week, phoned her up to arrange a date but unfortunately she'd popped her clogs.  ",
@@ -1101,10 +1118,11 @@
             "001100010010011110100001101101110011"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1118,7 +1136,7 @@
     },
     {
       "intent": "Likes",
-      "text": [
+      "text":
         {
           "english": [
             "I like cats",
@@ -1133,8 +1151,8 @@
             "Eu adoro cães"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I like <LIKE>",
@@ -1148,17 +1166,20 @@
             "Fixe"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gLikes.getLikes",
         "entities": false,
+        "tag": "<LIKES>",
         "english": [
-          "I like %%LIKE%%",
-          "I love %%LIKE%%"
+          "dogs",
+          "cats",
+          "ice cream"
         ],
         "portuguese": [
-          "Eu gosto de %%LIKE%%",
-          "Eu adoro %%LIKE%%"
+          "cães",
+          "gatos",
+          "gelado"
         ]
       },
       "context": {
@@ -1171,7 +1192,7 @@
     },
     {
       "intent": "SharedLikes",
-      "text": [
+      "text":
         {
           "english": [
             "I like <LIKE>",
@@ -1185,8 +1206,8 @@
             "Eu adoro <LIKE>"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I also like <SHAREDLIKES>"
@@ -1195,10 +1216,11 @@
             "Eu também gosto <SHAREDLIKES>"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gSharedLikes.checkLikes",
         "entities": false,
+        "tag": "<SHAREDLIKES>",
         "english": [
           "I also like <SHAREDLIKES>"
         ],
@@ -1217,7 +1239,7 @@
     
     {
       "intent": "Dislikes",
-      "text": [
+      "text":
         {
           "english": [
             "I hate broccoli",
@@ -1230,8 +1252,8 @@
             "Eu detesto brocolos"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I hate <DISLIKE>",
@@ -1243,17 +1265,18 @@
             "Eu detesto <DISLIKE>"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "extensions.gDislikes.getDislikes",
         "entities": false,
+        "tag": "<DISLIKES>",
         "english": [
-          "I hate %%DISLIKE%%",
-          "I don't like %%DISLIKE%%"
+          "broccoli",
+          "other chatbots"
         ],
         "portuguese": [
-          "Eu não gosto de %%DISLIKE%%",
-          "Eu detesto %%DISLIKE%%"
+          "brocolos",
+          "outros chatbots"
         ]
       },
       "context": {
@@ -1267,7 +1290,7 @@
 
     {
       "intent": "BotLikes",
-      "text": [
+      "text":
         {
           "english": [
             "Do you like cats?",
@@ -1280,8 +1303,8 @@
             "Gostas de cães?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I do!",
@@ -1292,10 +1315,11 @@
             "Gosto muito deles"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1309,7 +1333,7 @@
     },
     {
       "intent": "BotDislikes",
-      "text": [
+      "text":
         {
           "english": [
             "Do you dislike brocoli?",
@@ -1321,8 +1345,8 @@
             "Gostas de brocolos?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I do!",
@@ -1333,10 +1357,11 @@
             "Não, detesto brocolos"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1350,7 +1375,7 @@
     },
     {
       "intent": "Hobbies",
-      "text": [
+      "text":
         {
           "english": [
             "What do you do on your free time?",
@@ -1363,8 +1388,8 @@
             "O que fazes quando não estás a falar com alguém?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I mine dogecoin!",
@@ -1377,10 +1402,11 @@
             "Jogo Pong"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1394,7 +1420,7 @@
     },
     {
       "intent": "Bored",
-      "text": [
+      "text":
         {
           "english": [
             "I'm bored, what should i do?",
@@ -1406,8 +1432,8 @@
             "Estou aborrecido, diz algo que possa fazer"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "Watch me play Tetris",
@@ -1420,10 +1446,11 @@
             "Bora passear"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1437,7 +1464,7 @@
     },
     {
       "intent": "Walk",
-      "text": [
+      "text":
         {
           "english": [
             "You can go for walks?",
@@ -1448,8 +1475,8 @@
             "Como é que vamos passear?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I don't know you tell me",
@@ -1462,10 +1489,11 @@
             "... eu esqueci-me que não posso andar ... ;("
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },
@@ -1479,7 +1507,7 @@
     },
     {
       "intent": "Games",
-      "text": [
+      "text":
         {
           "english": [
             "What games can you play?",
@@ -1492,8 +1520,8 @@
             "Que jogos já jogaste?"
           ]
         }
-      ],
-      "responses": [
+      ,
+      "responses": 
         {
           "english": [
             "I can play Pong ... it's very hard",
@@ -1506,10 +1534,11 @@
             "Eu tenho o highscore no Snake"
           ]
         }
-      ],
+      ,
       "extension": {
         "function": "",
         "entities": false,
+        "tag": "",
         "english": [],
         "portuguese": []
       },

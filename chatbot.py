@@ -60,6 +60,10 @@ class Chatbot:
         # Handle questions and answers
         self.questions = {}
         self.answers = {}
+        self.extensions = {}
+
+        # Likes
+        self.likes = ['dogs', 'cats', 'money']
 
         # Handle intents
         self.intents = []
@@ -73,6 +77,9 @@ class Chatbot:
 
         # Handle vector representation (for machine learning)
         self.vector_representation = None
+
+    def getLikes(self):
+        return self.likes[0]
 
     def load_database(self):
 
@@ -93,10 +100,13 @@ class Chatbot:
         intent = entry['intent']
 
         # Obtain questions
-        questions = entry['text'][0]
+        questions = entry['text']
 
         # Obtain answers
-        answers = entry['responses'][0]
+        answers = entry['responses']
+
+        # Obtain answers
+        extensions = entry['extension']
 
         for language in questions:
             for question in questions[language]:
@@ -121,6 +131,11 @@ class Chatbot:
                 self.add_answer(intent, answer, language)
 
                 # TODO: Keep track of answer tokens
+
+        for key in extensions:
+
+            # Add extensions to database
+            self.add_extension(intent, extensions[key], key)
 
     def add_token(self, token, words, language):
 
@@ -154,6 +169,14 @@ class Chatbot:
 
         self.answers[language][intent].append(answer)
 
+    def add_extension(self, intent, extension, key):
+
+        if key not in self.extensions:
+            self.extensions[key] = {}
+
+        if intent not in self.extensions[key]:
+            self.extensions[key][intent] = extension
+
     def detect_language(self, tokens):
 
         languages_detected = {}
@@ -170,6 +193,20 @@ class Chatbot:
             return None
 
         return max(languages_detected, key=lambda key: languages_detected[key])
+    
+    def get_response(self, intent, language):
+        response = random.choice(self.answers[language][intent])
+        
+        # Check if there is an extension
+        if self.extensions["function"][intent] != "":
+            # New text for response
+            extension_response = random.choice(self.extensions[language][intent])
+            # Text that must be swap in reponse
+            tag = self.extensions["tag"][intent]
+            # Replace tag
+            response = response.replace(tag, extension_response)
+
+        return response
 
     def train_model(self):
 
@@ -197,7 +234,6 @@ class Chatbot:
         tokens, lang = self.tokenize(message, message.endswith('?'))
         message_vector = self.tf_idf_model.transform([" ".join(tokens)])
         predicted_tag = self.intents[np.argmax(self.model.predict(message_vector))]
-
         return predicted_tag, lang
     
     def tokenize(self, user_input, is_question):
@@ -318,9 +354,8 @@ class Chatbot:
             # Process input
             tag, language = self.predict_intent(user_input)
 
-            response = random.choice(self.answers[language][tag])
-
-            print(language, tag)
+            response = self.get_response(tag,language)
+            # response = random.choice(self.answers[language][tag])
 
             print(f"ChatBot: {response}")
 
@@ -331,7 +366,7 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(stopwords_path='stopwords.txt')
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/extension_dataset.json')
 
     # Load database (training data)
     chatbot.load_database()
