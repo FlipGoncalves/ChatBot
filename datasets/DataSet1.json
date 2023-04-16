@@ -28,8 +28,8 @@
             "Hola human, please tell me your GeniSys user"
           ],
           "portuguese": [
-            "Olá humano, por favo indique o seu GeniSys user",
-            "Ei humano, por favo indique o seu GeniSys user"
+            "Olá humano, por favor indique o seu GeniSys user",
+            "Ei humano, por favor indique o seu GeniSys user"
           ]
         }
       ],
@@ -52,37 +52,37 @@
       "text": [
         {
           "english": [
-            "My user is Adam",
-            "This is Adam",
-            "I am Adam",
-            "It is Adam",
-            "My user is Bella",
-            "This is Bella",
-            "I am Bella",
-            "It is Bella"
+            "My user is <NULL>",
+            "This is <NULL>",
+            "I am <NULL>",
+            "It is <NULL>",
+            "My user is <NULL>",
+            "This is <NULL>",
+            "I am <NULL>",
+            "It is <NULL>"
           ],
           "portuguese": [
-            "O meu user é Adam",
-            "Eu sou Adam",
-            "É Adam",
-            "O meu user é Bella",
-            "Eu sou Bella",
-            "É Bella"
+            "O meu user é <NULL>",
+            "Eu sou <NULL>",
+            "É <NULL>",
+            "O meu user é <NULL>",
+            "Eu sou <NULL>",
+            "É <NULL>"
           ]
         }
       ],
       "responses": [
         {
           "english": [
-            "Great! Hi <HUMAN>! How can I help?",
-            "Good! Hi <HUMAN>, how can I help you?",
-            "Cool! Hello <HUMAN>, what can I do for you?",
-            "OK! Hola <HUMAN>, how can I help you?",
-            "OK! hi <HUMAN>, what can I do for you?"
+            "Great! Hi <PERSON>! How can I help?",
+            "Good! Hi <PERSON>, how can I help you?",
+            "Cool! Hello <PERSON>, what can I do for you?",
+            "OK! Hola <PERSON>, how can I help you?",
+            "OK! hi <PERSON>, what can I do for you?"
           ],
           "portuguese": [
-            "Ótimo! Ei <HUMANO>, como posso te ajudar?",
-            "OK! Olá <HUMAN>, como posso te ajudar?"
+            "Ótimo! Ei <PERSON>, como posso te ajudar?",
+            "OK! Olá <PERSON>, como posso te ajudar?"
           ]
         }
       ],
@@ -90,15 +90,15 @@
         "function": "extensions.gHumans.updateHuman",
         "entities": true,
         "english": [
-          "Hi %%HUMAN%%! How can I help?",
-          "Hi %%HUMAN%%, how can I help you?",
-          "Hello %%HUMAN%%, what can I do for you?",
-          "Hola %%HUMAN%%, how can I help you?",
-          "OK hi %%HUMAN%%, what can I do for you?"
+          "Hi %%PERSON%%! How can I help?",
+          "Hi %%PERSON%%, how can I help you?",
+          "Hello %%PERSON%%, what can I do for you?",
+          "Hola %%PERSON%%, how can I help you?",
+          "OK hi %%PERSON%%, what can I do for you?"
         ],
         "portuguese": [
-          "Olá %%HUMAN%%! Como posso ajudar?",
-          "OK ei %%HUMAN%%, o que posso fazer por si?"
+          "Olá %%PERSON%%! Como posso ajudar?",
+          "OK ei %%PERSON%%, o que posso fazer por si?"
         ]
       },
       "context": {
@@ -107,48 +107,7 @@
         "clear": true
       },
       "entityType": "NA",
-      "entities": [
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 3,
-          "rangeTo": 4
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 2,
-          "rangeTo": 3
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 1,
-          "rangeTo": 2
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 2,
-          "rangeTo": 3
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 3,
-          "rangeTo": 4
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 2,
-          "rangeTo": 3
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 1,
-          "rangeTo": 2
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 2,
-          "rangeTo": 3
-        }
-      ]
+      "entities": ["PERSON"]
     },
     {
       "intent": "CourtesyGreeting",
@@ -220,15 +179,15 @@
       "responses": [
         {
           "english": [
-            "Great! Hi <HUMAN>! How can I help?",
-            "Good! Hi <HUMAN>, how can I help you?",
-            "Cool! Hello <HUMAN>, what can I do for you?",
-            "OK! Hola <HUMAN>, how can I help you?",
-            "OK! hi <HUMAN>, what can I do for you?"
+            "Great! Hi <PERSON>! How can I help?",
+            "Good! Hi <PERSON>, how can I help you?",
+            "Cool! Hello <PERSON>, what can I do for you?",
+            "OK! Hola <PERSON>, how can I help you?",
+            "OK! hi <PERSON>, what can I do for you?"
           ],
           "portuguese": [
-            "Ótimo! Ei <HUMANO>, como posso te ajudar?",
-            "OK! Olá <HUMAN>, como posso te ajudar?"
+            "Ótimo! Ei <PERSON>, como posso te ajudar?",
+            "OK! Olá <PERSON>, como posso te ajudar?"
           ]
         }
       ],
@@ -236,15 +195,15 @@
         "function": "extensions.gHumans.updateHuman",
         "entities": true,
         "english": [
-          "Great %%HUMAN%%! How can I help?",
-          "Good %%HUMAN%%, how can I help you?",
-          "Cool %%HUMAN%%, what can I do for you?",
-          "OK %%HUMAN%%, how can I help you?",
-          "OK hi %%HUMAN%%, what can I do for you?"
+          "Great %%PERSON%%! How can I help?",
+          "Good %%PERSON%%, how can I help you?",
+          "Cool %%PERSON%%, what can I do for you?",
+          "OK %%PERSON%%, how can I help you?",
+          "OK hi %%PERSON%%, what can I do for you?"
         ],
         "portuguese": [
-          "Ótimo! Ei %%HUMAN%%, como posso te ajudar?",
-          "OK! Olá %%HUMAN%%, como posso te ajudar?"
+          "Ótimo! Ei %%PERSON%%, como posso te ajudar?",
+          "OK! Olá %%PERSON%%, como posso te ajudar?"
         ]
       },
       "context": {
@@ -253,48 +212,7 @@
         "clear": true
       },
       "entityType": "NA",
-      "entities": [
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 5,
-          "rangeTo": 6
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 4,
-          "rangeTo": 5
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 3,
-          "rangeTo": 4
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 4,
-          "rangeTo": 5
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 5,
-          "rangeTo": 6
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 4,
-          "rangeTo": 5
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 3,
-          "rangeTo": 4
-        },
-        {
-          "entity": "HUMAN",
-          "rangeFrom": 3,
-          "rangeTo": 4
-        }
-      ]
+      "entities": ["HUMAN"]
     },
     {
       "intent": "CurrentHumanQuery",
@@ -318,16 +236,16 @@
       "responses": [
         {
           "english": [
-            "You are <HUMAN>! How can I help?",
-            "Your name is  <HUMAN>, how can I help you?",
-            "They call you <HUMAN>, what can I do for you?",
-            "Your name is <HUMAN>, how can I help you?",
-            "<HUMAN>, what can I do for you?"
+            "You are <PERSON>! How can I help?",
+            "Your name is  <PERSON>, how can I help you?",
+            "They call you <PERSON>, what can I do for you?",
+            "Your name is <PERSON>, how can I help you?",
+            "<PERSON>, what can I do for you?"
           ],
           "portuguese": [
-            "Tu és <HUMAM>! Como posso ajudar?",
-            "Chamas-te <HUMAM>, como posso ajudar?",
-            "<HUMAM>, como posso ajudar?"
+            "Tu és <PERSON>! Como posso ajudar?",
+            "Chamas-te <PERSON>, como posso ajudar?",
+            "<PERSON>, como posso ajudar?"
           ]
         }
       ],
@@ -335,16 +253,16 @@
         "function": "extensions.gHumans.getCurrentHuman",
         "entities": false,
         "english": [
-          "You are %%HUMAN%%! How can I help?",
-          "Your name is  %%HUMAN%%, how can I help you?",
-          "They call you %%HUMAN%%, what can I do for you?",
-          "Your name is %%HUMAN%%, how can I help you?",
-          "%%HUMAN%%, what can I do for you?"
+          "You are %%PERSON%%! How can I help?",
+          "Your name is  %%PERSON%%, how can I help you?",
+          "They call you %%PERSON%%, what can I do for you?",
+          "Your name is %%PERSON%%, how can I help you?",
+          "%%PERSON%%, what can I do for you?"
         ],
         "portuguese": [
-          "Tu és %%HUMAN%%! Como posso ajudar?",
-          "Chamas-te %%HUMAN%%, como posso ajudar?",
-          "%%HUMAN%%, como posso ajudar?"
+          "Tu és %%PERSON%%! Como posso ajudar?",
+          "Chamas-te %%PERSON%%, como posso ajudar?",
+          "%%PERSON%%, como posso ajudar?"
         ]
       },
       "context": {
@@ -858,13 +776,13 @@
         "function": "extensions.gHumans.getHumanByFace",
         "entities": false,
         "english": [
-          "Hi %%HUMAN%%, how are you?",
-          "I believe you are %%HUMAN%%, how are you?",
-          "You are %%HUMAN%%, how are you doing?"
+          "Hi %%PERSON%%, how are you?",
+          "I believe you are %%PERSON%%, how are you?",
+          "You are %%PERSON%%, how are you doing?"
         ],
         "portuguese": [
-          "Olá %%HUMAN%%, como estás?",
-          "És o %%HUMAN%%, como estás?"
+          "Olá %%PERSON%%, como estás?",
+          "És o %%PERSON%%, como estás?"
         ]
       },
       "context": {
@@ -1121,16 +1039,16 @@
       "text": [
         {
           "english": [
-            "I like cats",
-            "I like dogs",
-            "I love cats",
-            "I love dogs"
+            "I like <NULL>",
+            "I like <NULL>",
+            "I love <NULL>",
+            "I love <NULL>"
           ],
           "portuguese": [
-            "Eu gosto de gatos",
-            "Eu gosto de cães",
-            "Eu adoro gatos",
-            "Eu adoro cães"
+            "Eu gosto de <NULL>",
+            "Eu gosto de <NULL>",
+            "Eu adoro <NULL>",
+            "Eu adoro <NULL>"
           ]
         }
       ],
@@ -1151,7 +1069,7 @@
       ],
       "extension": {
         "function": "extensions.gLikes.getLikes",
-        "entities": false,
+        "entities": true,
         "english": [
           "I like %%LIKE%%",
           "I love %%LIKE%%"
@@ -1167,43 +1085,43 @@
         "clear": false
       },
       "entityType": "NA",
-      "entities": []
+      "entities": ["LIKE"]
     },
     {
       "intent": "SharedLikes",
       "text": [
         {
           "english": [
-            "I like <LIKE>",
-            "I really like <LIKE>",
-            "I love <LIKE>",
-            "I adore <LIKE>"
+            "I like <NULL>",
+            "I really like <NULL>",
+            "I love <NULL>",
+            "I adore <NULL>"
           ],
           "portuguese": [
-            "Eu gosto de <LIKE>",
-            "Eu gosto imenso de <LIKE>",
-            "Eu adoro <LIKE>"
+            "Eu gosto de <NULL>",
+            "Eu gosto imenso de <NULL>",
+            "Eu adoro <NULL>"
           ]
         }
       ],
       "responses": [
         {
           "english": [
-            "I also like <SHAREDLIKES>"
+            "I also like <LIKE>"
           ],
           "portuguese": [
-            "Eu também gosto <SHAREDLIKES>"
+            "Eu também gosto <LIKE>"
           ]
         }
       ],
       "extension": {
         "function": "extensions.gSharedLikes.checkLikes",
-        "entities": false,
+        "entities": true,
         "english": [
-          "I also like <SHAREDLIKES>"
+          "I also like <LIKE>"
         ],
         "portuguese": [
-          "Eu também gosto <SHAREDLIKES>"
+          "Eu também gosto <LIKE>"
         ]
       },
       "context": {
@@ -1212,7 +1130,7 @@
         "clear": false
       },
       "entityType": "NA",
-      "entities": []
+      "entities": ["LIKE"]
     },
     
     {
@@ -1220,14 +1138,14 @@
       "text": [
         {
           "english": [
-            "I hate broccoli",
-            "I dislike broccoli",
-            "I don't like broccoli"
+            "I hate <NULL>",
+            "I dislike <NULL>",
+            "I don't like <NULL>"
           ],
           "portuguese": [
-            "Eu não gosto de brocolos",
-            "Eu não gosto mesmo de brocolos",
-            "Eu detesto brocolos"
+            "Eu não gosto de <NULL>",
+            "Eu não gosto mesmo de <NULL>",
+            "Eu detesto <NULL>"
           ]
         }
       ],
@@ -1246,7 +1164,7 @@
       ],
       "extension": {
         "function": "extensions.gDislikes.getDislikes",
-        "entities": false,
+        "entities": true,
         "english": [
           "I hate %%DISLIKE%%",
           "I don't like %%DISLIKE%%"
@@ -1270,14 +1188,12 @@
       "text": [
         {
           "english": [
-            "Do you like cats?",
-            "Do you love cats?",
-            "Do you like dogs?",
-            "Do you love dogs?"
+            "Do you like <NULL>?",
+            "Do you love <NULL>?"
           ],
           "portuguese": [
-            "Gostas de gatos?",
-            "Gostas de cães?"
+            "Gostas de <NULL>?",
+            "Gostas de <NULL>?"
           ]
         }
       ],
@@ -1312,13 +1228,13 @@
       "text": [
         {
           "english": [
-            "Do you dislike brocoli?",
-            "Do you hate brocoli?",
-            "You don't like brocoli do you?"
+            "Do you dislike <NULL>?",
+            "Do you hate <NULL>?",
+            "You don't like <NULL> do you?"
           ],
           "portuguese": [
-            "Não gostas de brocolos?",
-            "Gostas de brocolos?"
+            "Não gostas de <NULL>?",
+            "Gostas de <NULL>?"
           ]
         }
       ],
@@ -1330,7 +1246,7 @@
           ],
           "portuguese": [
             "Não, não gosto!",
-            "Não, detesto brocolos"
+            "Não, detesto"
           ]
         }
       ],

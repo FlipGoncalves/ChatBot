@@ -11,6 +11,7 @@ import numpy as np
 import nltk
 import random
 
+import spacy
 
 def apply_corrections(tokens, is_question):
 
@@ -64,6 +65,15 @@ class Chatbot:
         # Handle intents
         self.intents = []
 
+        # Handle entities for context
+        self.entities = {}
+
+        # Handle cache entities
+        self.cacheEntities={}
+
+        # Save token when it has not been identified as an entity, so that is saved in the entities when we have the correct intent
+        self.forgottenEntity = None
+
         # Model
         self.model = None
         self.tf_idf_model = TfidfVectorizer()
@@ -97,6 +107,8 @@ class Chatbot:
 
         # Obtain answers
         answers = entry['responses'][0]
+        
+        self.cacheEntities[intent] = entry['entities']
 
         for language in questions:
             for question in questions[language]:
@@ -152,7 +164,11 @@ class Chatbot:
         if intent not in self.answers[language]:
             self.answers[language][intent] = []
 
+        
         self.answers[language][intent].append(answer)
+        if self.cacheEntities[intent] != []:
+            self.answers[language][intent+'Entity']=self.cacheEntities[intent]
+            print(intent+"Entity")
 
     def detect_language(self, tokens):
 
@@ -200,6 +216,15 @@ class Chatbot:
 
         return predicted_tag, lang
     
+    # Define a function to extract named entities from a text input using spaCy
+    @staticmethod
+    def extract_entities(text):
+        nlp = spacy.load('en_core_web_sm')
+
+        doc = nlp(text)
+        entities = [(ent.text, ent.label_) for ent in doc.ents]
+        return entities
+
     def tokenize(self, user_input, is_question):
 
         # Tokenize input
@@ -245,8 +270,9 @@ class Chatbot:
     def obtain_input_tokens(self, tokenized_input, language):
 
         tokens = []
+        i=0
         for token in tokenized_input:
-
+            i+=1
             # If token is in database
             if token in self.token_words[language]:
                 # tokens.append(token)
@@ -280,11 +306,15 @@ class Chatbot:
 
                 # If there are no possible corrections
                 if len(possible_corrections) == 0:
-                    print(f' * "{token}": No possible corrections found')
-                    continue
-
-                # Add possible corrections to tokens
-                tokens.append(possible_corrections)
+                    if i==len(tokenized_input):
+                        self.forgottenEntity=token
+                        tokens.append(['<NULL>'])
+                    else:
+                        print(f' * "{token}": No possible corrections found')
+                        continue
+                else:
+                    # Add possible corrections to tokens
+                    tokens.append(possible_corrections)        
 
                 # Choose a random correction and add it to tokens
                 # correction = random.choice(possible_corrections)
@@ -292,14 +322,14 @@ class Chatbot:
 
         # Create combination of tokens
         tokens = list(itertools.product(*tokens))
-
+        i=0
         return tokens
 
     def start(self):
 
         # Greet user
         print('Hello, I am a chatbot. How can I help you?')
-
+        print(self.answers["english"]["LikesEntity"])
         # Start chatbot
         while True:
 
@@ -315,12 +345,37 @@ class Chatbot:
             if not user_input:
                 continue
 
+            # Take entities from user input, only stays with the latest information
+            entity= self.extract_entities(user_input)
+
+            if entity:
+                entity=[(entity[0][1],entity[0][0])]
+                self.entities.update(entity)
+                user_input=user_input.replace(entity[0][1],'<NULL>')
+
+
             # Process input
+            
             tag, language = self.predict_intent(user_input)
+            
+            # Check if forgottenEntity is not None
+            if self.forgottenEntity is not None:
+                # Add forgotten entity to entities
+                print("using entities")
+                self.entities[self.answers[language][tag+'Entity'][0]] = self.forgottenEntity
+                print(self.entities)
+                # Reset forgotten entity
+                self.forgottenEntity = None
 
             response = random.choice(self.answers[language][tag])
+            # Check if response has <> tags
+            if '<' in response and '>' in response:
+                #Extract substring between <>
+                substring = response[response.find("<") + 1:response.find(">")]
+                if substring in self.entities.keys():
+                    response=response.replace(f'<{substring}>', self.entities[substring])
 
-            print(language, tag)
+            entity= None
 
             print(f"ChatBot: {response}")
 

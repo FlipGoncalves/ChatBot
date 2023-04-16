@@ -13,3 +13,8 @@ It supports the following features:
 - Remove stop words (optional)
 - Normalize words to lowercase
 - Stem words 
+
+
+## Setup
+The program needs to run the following commands in a python compiler:
+python3 -m spacy download en_core_web_sm
