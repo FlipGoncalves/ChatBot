@@ -88,19 +88,19 @@
         }
       ,
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "updateHuman",
         "entities": true,
         "tag": "<HUMAN>",
         "english": [
-          "Hi %%HUMAN%%! How can I help?",
-          "Hi %%HUMAN%%, how can I help you?",
-          "Hello %%HUMAN%%, what can I do for you?",
-          "Hola %%HUMAN%%, how can I help you?",
-          "OK hi %%HUMAN%%, what can I do for you?"
+          "Hi <HUMAN>! How can I help?",
+          "Hi <HUMAN>, how can I help you?",
+          "Hello <HUMAN>, what can I do for you?",
+          "Hola <HUMAN>, how can I help you?",
+          "OK hi <HUMAN>, what can I do for you?"
         ],
         "portuguese": [
-          "Olá %%HUMAN%%! Como posso ajudar?",
-          "OK ei %%HUMAN%%, o que posso fazer por si?"
+          "Olá <HUMAN>! Como posso ajudar?",
+          "OK ei <HUMAN>, o que posso fazer por si?"
         ]
       },
       "context": {
@@ -236,19 +236,19 @@
         }
       ,
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "updateHuman",
         "entities": true,
         "tag": "<HUMAN>",
         "english": [
-          "Great %%HUMAN%%! How can I help?",
-          "Good %%HUMAN%%, how can I help you?",
-          "Cool %%HUMAN%%, what can I do for you?",
-          "OK %%HUMAN%%, how can I help you?",
-          "OK hi %%HUMAN%%, what can I do for you?"
+          "Great <HUMAN>! How can I help?",
+          "Good <HUMAN>, how can I help you?",
+          "Cool <HUMAN>, what can I do for you?",
+          "OK <HUMAN>, how can I help you?",
+          "OK hi <HUMAN>, what can I do for you?"
         ],
         "portuguese": [
-          "Ótimo! Ei %%HUMAN%%, como posso te ajudar?",
-          "OK! Olá %%HUMAN%%, como posso te ajudar?"
+          "Ótimo! Ei <HUMAN>, como posso te ajudar?",
+          "OK! Olá <HUMAN>, como posso te ajudar?"
         ]
       },
       "context": {
@@ -322,34 +322,31 @@
       "responses": 
         {
           "english": [
-            "You are <HUMAN>! How can I help?",
-            "Your name is  <HUMAN>, how can I help you?",
-            "They call you <HUMAN>, what can I do for you?",
-            "Your name is <HUMAN>, how can I help you?",
-            "<HUMAN>, what can I do for you?"
+            "Let me think",
+            "If i recall",
+            "If i haven't been hacked",
+            "*Checking memory* ..."
           ],
           "portuguese": [
-            "Tu és <HUMAM>! Como posso ajudar?",
-            "Chamas-te <HUMAM>, como posso ajudar?",
-            "<HUMAM>, como posso ajudar?"
+            "Se não me engano",
+            "Se não fui hackeado",
+            "*Verificando memoria* ..."
           ]
         }
       ,
       "extension": {
-        "function": "extensions.gHumans.getCurrentHuman",
+        "function": "getCurrentHuman",
         "entities": false,
         "tag": "<HUMAN>",
         "english": [
-          "You are %%HUMAN%%! How can I help?",
-          "Your name is  %%HUMAN%%, how can I help you?",
-          "They call you %%HUMAN%%, what can I do for you?",
-          "Your name is %%HUMAN%%, how can I help you?",
-          "%%HUMAN%%, what can I do for you?"
+          "You are <HUMAN>! How can I help?",
+          "Your name is  <HUMAN>, how can I help you?",
+          "They call you <HUMAN>, what can I do for you?",
+          "Your name is <HUMAN>, how can I help you?"
         ],
         "portuguese": [
-          "Tu és %%HUMAN%%! Como posso ajudar?",
-          "Chamas-te %%HUMAN%%, como posso ajudar?",
-          "%%HUMAN%%, como posso ajudar?"
+          "Tu és <HUMAN>! Como posso ajudar?",
+          "Chamas-te <HUMAN>, como posso ajudar?"
         ]
       },
       "context": {
@@ -475,9 +472,9 @@
       "responses": 
         {
           "english": [
-            "One moment",
-            "One sec",
-            "One second"
+            "One moment ... ",
+            "One sec ... ",
+            "One second ... "
           ],
           "portuguese": [
             "Espere um pouco",
@@ -487,17 +484,17 @@
         }
       ,
       "extension": {
-        "function": "extensions.gTime.getTime",
+        "function": "getTime",
         "entities": false,
         "tag": "<TIME>",
         "english": [
-          "The time is %%TIME%%",
-          "Right now it is %%TIME%%",
-          "It is around %%TIME%%"
+          "The time is <TIME>",
+          "Right now it is <TIME>",
+          "It is around <TIME>"
         ],
         "portuguese": [
-          "É %%TIME%%",
-          "São %%TIME%%"
+          "É <TIME>",
+          "São <TIME>"
         ]
       },
       "context": {
@@ -870,17 +867,17 @@
         }
       ,
       "extension": {
-        "function": "extensions.gHumans.getHumanByFace",
+        "function": "getCurrentHuman",
         "entities": false,
         "tag": "<HUMAN>",
         "english": [
-          "Hi %%HUMAN%%, how are you?",
-          "I believe you are %%HUMAN%%, how are you?",
-          "You are %%HUMAN%%, how are you doing?"
+          "Hi <HUMAN>, how are you?",
+          "I believe you are <HUMAN>, how are you?",
+          "You are <HUMAN>, how are you doing?"
         ],
         "portuguese": [
-          "Olá %%HUMAN%%, como estás?",
-          "És o %%HUMAN%%, como estás?"
+          "Olá <HUMAN>, como estás?",
+          "És o <HUMAN>, como estás?"
         ]
       },
       "context": {
@@ -1155,31 +1152,25 @@
       "responses": 
         {
           "english": [
-            "I like <LIKE>",
-            "I love <LIKE>",
             "Thats cool",
-            "Same"
+            "Nice"
           ],
           "portuguese": [
-            "Eu gosto de <LIKE>",
-            "Eu adoro <LIKE>",
             "Fixe"
           ]
         }
       ,
       "extension": {
-        "function": "extensions.gLikes.getLikes",
+        "function": "getLike",
         "entities": false,
         "tag": "<LIKES>",
         "english": [
-          "dogs",
-          "cats",
-          "ice cream"
+          "I like <LIKE>",
+          "I love <LIKE>"
         ],
         "portuguese": [
-          "cães",
-          "gatos",
-          "gelado"
+          "Eu gosto de <LIKE>",
+          "Eu adoro <LIKE>"
         ]
       },
       "context": {
@@ -1190,53 +1181,6 @@
       "entityType": "NA",
       "entities": []
     },
-    {
-      "intent": "SharedLikes",
-      "text":
-        {
-          "english": [
-            "I like <LIKE>",
-            "I really like <LIKE>",
-            "I love <LIKE>",
-            "I adore <LIKE>"
-          ],
-          "portuguese": [
-            "Eu gosto de <LIKE>",
-            "Eu gosto imenso de <LIKE>",
-            "Eu adoro <LIKE>"
-          ]
-        }
-      ,
-      "responses": 
-        {
-          "english": [
-            "I also like <SHAREDLIKES>"
-          ],
-          "portuguese": [
-            "Eu também gosto <SHAREDLIKES>"
-          ]
-        }
-      ,
-      "extension": {
-        "function": "extensions.gSharedLikes.checkLikes",
-        "entities": false,
-        "tag": "<SHAREDLIKES>",
-        "english": [
-          "I also like <SHAREDLIKES>"
-        ],
-        "portuguese": [
-          "Eu também gosto <SHAREDLIKES>"
-        ]
-      },
-      "context": {
-        "in": "",
-        "out": "",
-        "clear": false
-      },
-      "entityType": "NA",
-      "entities": []
-    },
-    
     {
       "intent": "Dislikes",
       "text":
@@ -1256,27 +1200,26 @@
       "responses": 
         {
           "english": [
-            "I hate <DISLIKE>",
-            "I don't like <DISLIKE>",
-            "Same"
+            "I see",
+            ":("
           ],
           "portuguese": [
-            "Eu não gosto de <DISLIKE>",
-            "Eu detesto <DISLIKE>"
+            "Cada um tem os seus gostos",
+            ":("
           ]
         }
       ,
       "extension": {
-        "function": "extensions.gDislikes.getDislikes",
+        "function": "getDislike",
         "entities": false,
         "tag": "<DISLIKES>",
         "english": [
-          "broccoli",
-          "other chatbots"
+          "I hate <DISLIKE>",
+          "I don't like <DISLIKE>"
         ],
         "portuguese": [
-          "brocolos",
-          "outros chatbots"
+          "Eu não gosto de <DISLIKE>",
+          "Eu detesto <DISLIKE>"
         ]
       },
       "context": {

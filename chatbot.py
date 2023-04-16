@@ -1,5 +1,6 @@
 import itertools
 import json
+import time
 # import random
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -57,13 +58,15 @@ class Chatbot:
         # Handle dataset path
         self.dataset_path = path
 
-        # Handle questions and answers
+        # Handle questions, answers and extensions
         self.questions = {}
         self.answers = {}
         self.extensions = {}
 
-        # Likes
-        self.likes = ['dogs', 'cats', 'money']
+        # Handle extension mods
+        self.user = "¯\_(ツ)_/¯"
+        self.likes = {"english":['dogs', 'cats', 'money'],"portuguese":["cães","gatos","gelado"]}
+        self.dislike = {"english": ["broccoli","other chatbots"],"portuguese": ["brocolos","outros chatbots"]}
 
         # Handle intents
         self.intents = []
@@ -77,9 +80,6 @@ class Chatbot:
 
         # Handle vector representation (for machine learning)
         self.vector_representation = None
-
-    def getLikes(self):
-        return self.likes[0]
 
     def load_database(self):
 
@@ -108,10 +108,24 @@ class Chatbot:
         # Obtain answers
         extensions = entry['extension']
 
+        tag = ""
+
+        for key in extensions:
+
+            # Add extensions to database
+            self.add_extension(intent, extensions[key], key)
+
+            # # Check if tag exits
+            # if key == "tag":
+            #     tag = extensions[key]
+
         for language in questions:
             for question in questions[language]:
 
                 if intent not in self.intents: self.intents.append(intent)
+
+                # if tag != "":
+                #     question = question.replace("tag","")
 
                 # Add questions to database
                 self.add_question(intent, question, language)
@@ -131,11 +145,6 @@ class Chatbot:
                 self.add_answer(intent, answer, language)
 
                 # TODO: Keep track of answer tokens
-
-        for key in extensions:
-
-            # Add extensions to database
-            self.add_extension(intent, extensions[key], key)
 
     def add_token(self, token, words, language):
 
@@ -194,17 +203,42 @@ class Chatbot:
 
         return max(languages_detected, key=lambda key: languages_detected[key])
     
+    def getLike(self, language):
+        return random.choice(self.likes[language])
+    
+    def getDislike(self, language):
+        return random.choice(self.dislike[language])
+    
+    def getTime(self, language):
+        current_time = time.localtime()
+        return str(current_time[3]) + ":" + str(current_time[4])
+
+    def getCurrentHuman(self, language):
+        return self.user
+    
+    # Needs context
+    def updateHuman(self):
+        pass
+    
     def get_response(self, intent, language):
         response = random.choice(self.answers[language][intent])
+
+        func_name = self.extensions["function"][intent]
         
         # Check if there is an extension
-        if self.extensions["function"][intent] != "":
-            # New text for response
-            extension_response = random.choice(self.extensions[language][intent])
+        if func_name != "":
+            # Function
+            func = getattr(self,func_name)
+            extend = func(language)
+
             # Text that must be swap in reponse
             tag = self.extensions["tag"][intent]
+
+            # Extra response
+            extension_response = random.choice(self.extensions[language][intent]).replace(tag, extend)
+
             # Replace tag
-            response = response.replace(tag, extension_response)
+            response = response + "\n" + extension_response
 
         return response
 
@@ -354,6 +388,7 @@ class Chatbot:
             # Process input
             tag, language = self.predict_intent(user_input)
 
+            # Get proper response
             response = self.get_response(tag,language)
             # response = random.choice(self.answers[language][tag])
 
@@ -366,7 +401,7 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(stopwords_path='stopwords.txt')
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/extension_dataset.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
 
     # Load database (training data)
     chatbot.load_database()
