@@ -44,7 +44,6 @@
         "out": "GreetingUserRequest",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -87,7 +86,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "",
         "entities": true,
         "english": [
           "Hi %%PERSON%%! How can I help?",
@@ -106,7 +105,6 @@
         "out": "",
         "clear": true
       },
-      "entityType": "NA",
       "entities": ["PERSON"]
     },
     {
@@ -158,7 +156,6 @@
         "out": "CourtesyGreetingUserRequest",
         "clear": true
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -192,7 +189,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "",
         "entities": true,
         "english": [
           "Great %%PERSON%%! How can I help?",
@@ -211,7 +208,6 @@
         "out": "",
         "clear": true
       },
-      "entityType": "NA",
       "entities": ["HUMAN"]
     },
     {
@@ -250,7 +246,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.getCurrentHuman",
+        "function": "",
         "entities": false,
         "english": [
           "You are %%PERSON%%! How can I help?",
@@ -270,7 +266,6 @@
         "out": "CurrentHumanQuery",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -315,7 +310,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -359,7 +353,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -386,28 +379,27 @@
       "responses": [
         {
           "english": [
-            "One moment",
-            "One sec",
-            "One second"
+            "The time is <TIME>",
+            "Right now it is <TIME>",
+            "It is around <TIME>"
           ],
           "portuguese": [
-            "Espere um pouco",
-            "Um segudo",
-            "Só um bocadinho"
+            "É <TIME>",
+            "São <TIME>"
           ]
         }
       ],
       "extension": {
-        "function": "extensions.gTime.getTime",
+        "function": "get_time",
         "entities": false,
         "english": [
-          "The time is %%TIME%%",
-          "Right now it is %%TIME%%",
-          "It is around %%TIME%%"
+          "The time is <TIME>",
+          "Right now it is <TIME>",
+          "It is around <TIME>"
         ],
         "portuguese": [
-          "É %%TIME%%",
-          "São %%TIME%%"
+          "É <TIME>",
+          "São <TIME>"
         ]
       },
       "context": {
@@ -415,7 +407,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -464,7 +455,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -511,7 +501,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -604,7 +593,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -648,7 +636,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -692,7 +679,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -738,7 +724,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -773,7 +758,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.getHumanByFace",
+        "function": "",
         "entities": false,
         "english": [
           "Hi %%PERSON%%, how are you?",
@@ -790,7 +775,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -835,7 +819,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1031,7 +1014,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1068,7 +1050,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gLikes.getLikes",
+        "function": "",
         "entities": true,
         "english": [
           "I like %%LIKE%%",
@@ -1084,55 +1066,8 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": ["LIKE"]
     },
-    {
-      "intent": "SharedLikes",
-      "text": [
-        {
-          "english": [
-            "I like <NULL>",
-            "I really like <NULL>",
-            "I love <NULL>",
-            "I adore <NULL>"
-          ],
-          "portuguese": [
-            "Eu gosto de <NULL>",
-            "Eu gosto imenso de <NULL>",
-            "Eu adoro <NULL>"
-          ]
-        }
-      ],
-      "responses": [
-        {
-          "english": [
-            "I also like <LIKE>"
-          ],
-          "portuguese": [
-            "Eu também gosto <LIKE>"
-          ]
-        }
-      ],
-      "extension": {
-        "function": "extensions.gSharedLikes.checkLikes",
-        "entities": true,
-        "english": [
-          "I also like <LIKE>"
-        ],
-        "portuguese": [
-          "Eu também gosto <LIKE>"
-        ]
-      },
-      "context": {
-        "in": "",
-        "out": "",
-        "clear": false
-      },
-      "entityType": "NA",
-      "entities": ["LIKE"]
-    },
-    
     {
       "intent": "Dislikes",
       "text": [
@@ -1163,7 +1098,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gDislikes.getDislikes",
+        "function": "",
         "entities": true,
         "english": [
           "I hate %%DISLIKE%%",
@@ -1179,7 +1114,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
 
@@ -1220,7 +1154,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1261,7 +1194,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1305,7 +1237,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1348,7 +1279,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1390,7 +1320,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1434,7 +1363,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     }
   ]

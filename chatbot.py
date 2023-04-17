@@ -1,5 +1,6 @@
 import itertools
 import json
+import time
 # import random
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -62,6 +63,9 @@ class Chatbot:
         self.questions = {}
         self.answers = {}
 
+        # Handle extensions
+        self.extensions = {}
+
         # Handle intents
         self.intents = []
 
@@ -107,6 +111,9 @@ class Chatbot:
 
         # Obtain answers
         answers = entry['responses'][0]
+
+        # Obtain extensions
+        extensions = entry['extension']["function"]
         
         self.cacheEntities[intent] = entry['entities']
 
@@ -133,6 +140,10 @@ class Chatbot:
                 self.add_answer(intent, answer, language)
 
                 # TODO: Keep track of answer tokens
+
+        # Add answers to database
+        self.add_answer(intent, extensions, language)
+
 
     def add_token(self, token, words, language):
 
@@ -169,6 +180,17 @@ class Chatbot:
         if self.cacheEntities[intent] != []:
             self.answers[language][intent+'Entity']=self.cacheEntities[intent]
             print(intent+"Entity")
+
+    def add_extension(self, intent, function):
+
+        if intent not in self.extensions:
+            self.answers[intent] = []
+
+        self.extensions[intent].append(function)
+
+    def get_time(self):
+        current_time = time.localtime()
+        return str(current_time[3]) + ":" + str(current_time[4]) 
 
     def detect_language(self, tokens):
 
@@ -374,6 +396,8 @@ class Chatbot:
                 substring = response[response.find("<") + 1:response.find(">")]
                 if substring in self.entities.keys():
                     response=response.replace(f'<{substring}>', self.entities[substring])
+                if self.extensions[tag] != "":
+                    response=response.replace(f'<{substring}>', getattr(self, self.extensions[tag])())
 
             entity= None
 
