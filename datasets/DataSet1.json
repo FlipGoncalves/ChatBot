@@ -1017,19 +1017,18 @@
       "entities": []
     },
     {
-      "intent": "Likes",
+      "intent": "SharedLikes",
       "text": [
         {
           "english": [
             "I like <NULL>",
-            "I like <NULL>",
+            "I really like <NULL>",
             "I love <NULL>",
-            "I love <NULL>"
+            "I adore <NULL>"
           ],
           "portuguese": [
             "Eu gosto de <NULL>",
-            "Eu gosto de <NULL>",
-            "Eu adoro <NULL>",
+            "Eu gosto imenso de <NULL>",
             "Eu adoro <NULL>"
           ]
         }
@@ -1037,28 +1036,21 @@
       "responses": [
         {
           "english": [
-            "I like <LIKE>",
-            "I love <LIKE>",
-            "Thats cool",
-            "Same"
+            "I also like <LIKE>"
           ],
           "portuguese": [
-            "Eu gosto de <LIKE>",
-            "Eu adoro <LIKE>",
-            "Fixe"
+            "Eu também gosto <LIKE>"
           ]
         }
       ],
       "extension": {
-        "function": "",
+        "function": "extensions.gSharedLikes.checkLikes",
         "entities": true,
         "english": [
-          "I like %%LIKE%%",
-          "I love %%LIKE%%"
+          "I also like <LIKE>"
         ],
         "portuguese": [
-          "Eu gosto de %%LIKE%%",
-          "Eu adoro %%LIKE%%"
+          "Eu também gosto <LIKE>"
         ]
       },
       "context": {
@@ -1066,8 +1058,10 @@
         "out": "",
         "clear": false
       },
+      "entityType": "NA",
       "entities": ["LIKE"]
     },
+    
     {
       "intent": "Dislikes",
       "text": [
@@ -1363,6 +1357,93 @@
         "out": "",
         "clear": false
       },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "NotCorrect",
+      "text": [
+        {
+          "english": [
+            "That's not what i said",
+            "I didn't say that",
+            "That's not what i meant",
+            "I didn't mean it like that"
+          ],
+          "portuguese": [
+            "Não foi isso que eu disse",
+            "Eu não disse isso",
+            "Não era isso que queria dizer",
+            "Não queria dizer isso",
+            "Eu não queria dizer isso"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I'm sorry, what would be a good response to: "
+          ],
+          "portuguese": [
+            "Desculpa, o que seria uma boa resposta a: "
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "GreetingUserRequest",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "NotCorrect",
+      "text": [
+        {
+          "english": [
+            "That's not what i said",
+            "I didn't say that",
+            "That's not what i meant",
+            "I didn't mean it like that"
+          ],
+          "portuguese": [
+            "Não foi isso que eu disse",
+            "Eu não disse isso",
+            "Não era isso que queria dizer",
+            "Não queria dizer isso",
+            "Eu não queria dizer isso"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I'm sorry, what would be a good response to: "
+          ],
+          "portuguese": [
+            "Desculpa, o que seria uma boa resposta a: "
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "GreetingUserRequest",
+        "clear": false
+      },
+      "entityType": "NA",
       "entities": []
     }
   ]
