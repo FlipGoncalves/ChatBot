@@ -329,7 +329,6 @@ class Chatbot:
 
         # Greet user
         print('Hello, I am a chatbot. How can I help you?')
-        print(self.answers["english"]["LikesEntity"])
         # Start chatbot
         while True:
 
@@ -355,15 +354,15 @@ class Chatbot:
 
 
             # Process input
-            
             tag, language = self.predict_intent(user_input)
             
             # Check if forgottenEntity is not None
             if self.forgottenEntity is not None:
                 # Add forgotten entity to entities
-                print("using entities")
-                self.entities[self.answers[language][tag+'Entity'][0]] = self.forgottenEntity
-                print(self.entities)
+                # print("using entities")
+                if tag+'Entity' in self.answers[language].keys():
+                    self.entities[self.answers[language][tag+'Entity'][0]] = self.forgottenEntity
+                # print(self.entities)
                 # Reset forgotten entity
                 self.forgottenEntity = None
 

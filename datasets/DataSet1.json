@@ -1035,59 +1035,6 @@
       "entities": []
     },
     {
-      "intent": "Likes",
-      "text": [
-        {
-          "english": [
-            "I like <NULL>",
-            "I like <NULL>",
-            "I love <NULL>",
-            "I love <NULL>"
-          ],
-          "portuguese": [
-            "Eu gosto de <NULL>",
-            "Eu gosto de <NULL>",
-            "Eu adoro <NULL>",
-            "Eu adoro <NULL>"
-          ]
-        }
-      ],
-      "responses": [
-        {
-          "english": [
-            "I like <LIKE>",
-            "I love <LIKE>",
-            "Thats cool",
-            "Same"
-          ],
-          "portuguese": [
-            "Eu gosto de <LIKE>",
-            "Eu adoro <LIKE>",
-            "Fixe"
-          ]
-        }
-      ],
-      "extension": {
-        "function": "extensions.gLikes.getLikes",
-        "entities": true,
-        "english": [
-          "I like %%LIKE%%",
-          "I love %%LIKE%%"
-        ],
-        "portuguese": [
-          "Eu gosto de %%LIKE%%",
-          "Eu adoro %%LIKE%%"
-        ]
-      },
-      "context": {
-        "in": "",
-        "out": "",
-        "clear": false
-      },
-      "entityType": "NA",
-      "entities": ["LIKE"]
-    },
-    {
       "intent": "SharedLikes",
       "text": [
         {
