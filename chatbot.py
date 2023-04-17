@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neural_network import MLPClassifier
 
 from tokenizer import Tokenizer
+from grammar_checker import GrammarChecker
 
 # nltk.download('wordnet')
 # nltk.download('stopwords')
@@ -54,7 +55,7 @@ def apply_corrections(tokens, is_question):
 
 class Chatbot:
 
-    def __init__(self, tokenizer, path):
+    def __init__(self, tokenizer, grammar_checker, path):
 
         # Handle tokenizer
         self.tokenizer = tokenizer
@@ -77,6 +78,12 @@ class Chatbot:
 
         # Save token when it has not been identified as an entity, so that is saved in the entities when we have the correct intent
         self.forgottenEntity = None
+
+        #Grammar Checker
+        self.grammar_checker = grammar_checker
+
+        #Tree from last sentence
+        self.last_tree = ""
 
         # Model
         self.model = None
@@ -368,6 +375,13 @@ class Chatbot:
             if not user_input:
                 continue
 
+            potential_tree = self.grammar_checker.check_grammar(user_input)
+
+            if potential_tree is None:
+                #Bad grammar
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
+                continue
+
             # Take entities from user input, only stays with the latest information
             entity= self.extract_entities(user_input)
 
@@ -443,6 +457,7 @@ class Chatbot:
                 self.last_question = user_input
                 self.last_tag = tag
                 self.last_lang = language
+                self.last_tree = potential_tree
 
                 question_tokens = self.tokenizer.tokenize(temp)
 
@@ -480,8 +495,10 @@ if __name__ == '__main__':
     # Alternative:
     # tokenizer = Tokenizer(lemmatizer=nltk.stem.WordNetLemmatizer())
 
+    grammar_checker = GrammarChecker()
+
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSetSave.json')
+    chatbot = Chatbot(tokenizer=tokenizer, grammar_checker=grammar_checker, path='datasets/DataSetSave.json')
 
     # Load database (training data)
     chatbot.load_database()

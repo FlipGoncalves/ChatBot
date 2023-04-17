@@ -10,14 +10,15 @@ grammarEN = nltk.CFG.fromstring("""
     S -> NP VP
     S -> VP
     PP -> P NP
-    NP -> DT NP | N PP | N | ADJ N | ADV ADJ N | ADV ADJ | DT N | P
-    VP -> V NP | V PP | V NP PP | V
+    NP -> DT NP | N PP | N | ADJ N | ADV ADJ N | ADV ADJ | DT N | P | N NP
+    VP -> V NP | V PP | V NP PP | V | V PRT NP | V VP
     ADJ -> 'ADJ'
     ADV -> 'ADV'
     DT -> 'DET'
     N -> 'NOUN'
     P -> 'PRON'
     V -> 'VERB'
+    PRT -> 'PRT'
     """)
 
 grammarPT = nltk.CFG.fromstring("""
@@ -37,7 +38,7 @@ grammarPT = nltk.CFG.fromstring("""
     CONJ -> 'KS' | 'KC'
     """)
 
-sentence = "I love chicken wings"
+sentence = "Eu adoro uma banana na minha boca"
 
 parserPT = nltk.parse.ChartParser(grammar=grammarPT)
 
@@ -63,7 +64,6 @@ parsed = parserEN.parse(new_sentence.split())
 
 print("TESTE")
 for p in parsed:
-    print("ga")
     print(p)
 
 print()
