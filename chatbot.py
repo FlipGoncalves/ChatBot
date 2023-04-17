@@ -106,34 +106,6 @@ class Chatbot:
                 # Load all languages
                 self.load_entry(entry)
 
-    def load_dataset(self, dataset):
-        # Open dataset
-        with open(dataset, 'r', encoding='utf-8') as db:
-
-            # Load dataset
-            data = json.load(db)
-
-            # Load all entries
-            for language, values in data["questions"].items():
-                for intent, questions in values.items():
-                    for qst in questions:
-
-                        if intent not in self.intents: self.intents.append(intent)
-
-                        self.add_question(intent, qst, language)
-                        # Tokenize questions
-                        question_tokens_words = self.tokenizer.tokenize(qst)
-
-                        # Add token words to database
-                        for token in question_tokens_words:
-                            self.add_token(token, question_tokens_words[token], language)
-
-            for language, values in data["answers"].items():
-                for intent, answers in values.items():
-                    for answ in answers:
-                        self.add_answer(intent, answ, language)
-
-
     def load_entry(self, entry: json):
 
         # Obtain intent
@@ -386,7 +358,7 @@ class Chatbot:
 
             # Check if user wants to exit
             if user_input == 'exit':
-                print("Chatty: Goodbye !!!\nAdeus !!!")
+                print("Chatty: Goodbye !!!\n\tAdeus !!!")
                 self.saveDataset()
                 break
 
@@ -428,7 +400,7 @@ class Chatbot:
 
                 # Check if user wants to exit
                 if user_input == 'exit':
-                    print("Chatty: Goodbye !!!\nAdeus !!!")
+                    print("Chatty: Goodbye !!!\n\tAdeus !!!")
                     break
 
                 new_tag = "UserInput"+str(self.count)
@@ -447,13 +419,13 @@ class Chatbot:
                 self.add_answer(new_tag, user_input, self.last_lang)
                 self.last_tag = new_tag
 
-                print("Thank you for your help / Obrigado pela ajuda !!")
+                print("Chatty: Thank you for your help / Obrigado pela ajuda !!")
 
                 # train the model
                 chatbot.train_model(max_iter=1200)
 
             else:
-
+                temp = response
                 # Check if response has <> tags
                 if '<' in response and '>' in response:
                     #Extract substring between <>
@@ -470,18 +442,32 @@ class Chatbot:
                 self.last_tag = tag
                 self.last_lang = language
 
-                question_tokens = self.tokenizer.tokenize(user_input)
+                question_tokens = self.tokenizer.tokenize(temp)
 
                 if question_tokens not in self.all_questions:
-                    self.add_question(tag, user_input, language)
+                    self.add_question(tag, temp, language)
 
                     # train the model
                     chatbot.train_model(max_iter=1200)
 
     def saveDataset(self):
-        print("Saving new dataset...")
         with open("datasets/DataSetSave.json", "w") as f:
-            json.dump({"questions": self.questions, "answers": self.answers}, f)
+            data = {"intents": []}
+            for intent in self.intents:
+                data_intent = {"intent": intent, "text": [], "responses": [], "entities": []}
+                data_text = {}
+                data_resp = {}
+                for language in self.questions.keys():
+                    if intent in self.questions[language]:
+                        data_text[language] = self.questions[language][intent]
+                    if intent in self.answers[language]:
+                        data_resp[language] = self.answers[language][intent]
+                data_intent['text'].append(data_text)
+                data_intent['responses'].append(data_resp)
+                if intent in self.cacheEntities.keys():
+                    data_intent["entities"] = self.cacheEntities[intent]
+                data["intents"].append(data_intent)
+            json.dump(data, f)
 
 
 if __name__ == '__main__':
@@ -493,11 +479,10 @@ if __name__ == '__main__':
     # tokenizer = Tokenizer(lemmatizer=nltk.stem.WordNetLemmatizer())
 
     # Prepare chatbot
-    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSet1.json')
+    chatbot = Chatbot(tokenizer=tokenizer, path='datasets/DataSetSave.json')
 
     # Load database (training data)
-    # chatbot.load_database()
-    chatbot.load_dataset("datasets/DataSetSave.json")
+    chatbot.load_database()
 
     # train the model
     chatbot.train_model()
