@@ -1044,7 +1044,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gSharedLikes.checkLikes",
+        "function": "",
         "entities": true,
         "english": [
           "I also like <LIKE>"

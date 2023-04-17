@@ -138,6 +138,9 @@ class Chatbot:
                     for answ in answers:
                         self.add_answer(intent, answ, language)
 
+            for extension, function in data["extensions"].items():
+                self.add_extension(extension, function)
+
 
     def load_entry(self, entry: json):
 
@@ -179,8 +182,8 @@ class Chatbot:
 
                 # TODO: Keep track of answer tokens
 
-        # Add answers to database
-        self.add_answer(intent, extensions, language)
+        # Add extensions to database
+        self.add_extension(intent, extensions)
 
 
     def add_token(self, token, words, language):
@@ -229,24 +232,11 @@ class Chatbot:
         if intent in self.cacheEntities.keys() and self.cacheEntities[intent] != []:
             self.answers[language][intent+'Entity']=self.cacheEntities[intent]
             # print(intent+"Entity")
-            
-    def add_extension(self, intent, function):
-
-        if intent not in self.extensions:
-            self.answers[intent] = []
-
-        self.extensions[intent].append(function)
-
-    def get_time(self):
-        current_time = time.localtime()
-        return str(current_time[3]) + ":" + str(current_time[4]) 
 
     def add_extension(self, intent, function):
 
         if intent not in self.extensions:
-            self.answers[intent] = []
-
-        self.extensions[intent].append(function)
+            self.extensions[intent] = function
 
     def get_time(self):
         current_time = time.localtime()
@@ -449,16 +439,8 @@ class Chatbot:
                 # print(self.entities)
                 # Reset forgotten entity
                 self.forgottenEntity = None
-
+            
             response = random.choice(self.answers[language][tag])
-            # Check if response has <> tags
-            if '<' in response and '>' in response:
-                #Extract substring between <>
-                substring = response[response.find("<") + 1:response.find(">")]
-                if substring in self.entities.keys():
-                    response=response.replace(f'<{substring}>', self.entities[substring])
-                if self.extensions[tag] != "":
-                    response=response.replace(f'<{substring}>', getattr(self, self.extensions[tag])())
 
             if tag == "NotCorrect":
                 self.remove_question(self.last_tag, self.last_question, self.last_lang)
@@ -495,13 +477,15 @@ class Chatbot:
                 chatbot.train_model(max_iter=1200)
 
             else:
-
+                    
                 # Check if response has <> tags
                 if '<' in response and '>' in response:
                     #Extract substring between <>
                     substring = response[response.find("<") + 1:response.find(">")]
                     if substring in self.entities.keys():
                         response=response.replace(f'<{substring}>', self.entities[substring])
+                    if self.extensions[tag] != "":
+                        response=response.replace(f'<{substring}>', getattr(self, self.extensions[tag])())
 
                 entity= None
 
@@ -523,7 +507,7 @@ class Chatbot:
     def saveDataset(self):
         print("Saving new dataset...")
         with open("datasets/DataSetSave.json", "w") as f:
-            json.dump({"questions": self.questions, "answers": self.answers}, f)
+            json.dump({"questions": self.questions, "answers": self.answers, "extensions": self.extensions}, f)
 
 
 if __name__ == '__main__':
