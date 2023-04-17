@@ -1,4 +1,5 @@
 import nltk
+from unidecode import unidecode
 
 nltk.download('wordnet')
 nltk.download('stopwords')
@@ -41,6 +42,9 @@ class Tokenizer(object):
             # Remove special characters
             if not token.isalnum():
                 continue
+
+            # Remove accents
+            token = unidecode(token)
 
             # Ignore tokens that don't meet the minimum size
             if self.min_token_size and len(token) < self.min_token_size:
