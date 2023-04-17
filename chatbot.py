@@ -15,16 +15,18 @@ from tokenizer import Tokenizer
 
 import spacy
 
+from colorama import Fore, Style
+
 def apply_corrections(tokens, is_question):
 
     for i, token in enumerate(tokens):
-        print(f'[{i}] Did you mean: {" ".join(token)}{"?" if is_question else ""}')
+        print(f'\t[{i}] Did you mean: ' + Fore.RED + f'{" ".join(token)}{"?" if is_question else ""}' + Style.RESET_ALL)
 
     selected = False
     while not selected:
 
         # Obtain user input
-        user_input = input('>> ')
+        user_input = input(Style.BRIGHT + Fore.BLUE + '>>> ' + Style.RESET_ALL)
 
         # If user input is a number
         if user_input.isdigit():
@@ -202,7 +204,7 @@ class Chatbot:
                     languages_detected[language] += 1
 
         if len(languages_detected) == 0:
-            print('[Language not detected]')
+            print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ': ' + Fore.RED + '[Language not detected]' + Style.RESET_ALL)
             return None
 
         return max(languages_detected, key=lambda key: languages_detected[key])
@@ -301,7 +303,7 @@ class Chatbot:
             # If token is not in database
             elif token not in self.token_words[language]:
 
-                print(f'Token "{token}" not found in database {language.upper()}')
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f': Token "{token}" ' + Fore.RED + 'not found' + Style.RESET_ALL + ' in database ' + Fore.RED + f'{language.upper()}' + Style.RESET_ALL)
 
                 # Token must be at least 4 characters long for spelling check
                 if len(token) < 3:
@@ -348,17 +350,17 @@ class Chatbot:
     def start(self):
 
         # Greet user
-        print('\nChatty: Hello, I am a Chatty. How can I help you ?\n\tOlá, eu sou o Chatty. Como posso ajudar ?')
+        print('\n' + Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ': Hello, I am ' + Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + '. How can I help you ?\n\tOlá, eu sou o ' + Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + '. Como posso ajudar ?')
 
         # Start chatbot
         while True:
 
             # Obtain user input
-            user_input = input('> ')
+            user_input = input(Style.BRIGHT + Fore.BLUE + '> ' + Style.RESET_ALL)
 
             # Check if user wants to exit
             if user_input == 'exit':
-                print("Chatty: Goodbye !!!\n\tAdeus !!!")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": Goodbye !\n\tAdeus !")
                 self.saveDataset()
                 break
 
@@ -393,14 +395,14 @@ class Chatbot:
             if tag == "NotCorrect":
                 self.remove_question(self.last_tag, self.last_question, self.last_lang)
 
-                print(f"Chatty: {response}{self.last_question}")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}{self.last_question}")
 
                 # Obtain user input
-                user_input = input('> ')
+                user_input = input(Style.BRIGHT + Fore.BLUE + '> ' + Style.RESET_ALL)
 
                 # Check if user wants to exit
                 if user_input == 'exit':
-                    print("Chatty: Goodbye !!!\n\tAdeus !!!")
+                    print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": Goodbye !\n\tAdeus !")
                     break
 
                 new_tag = "UserInput"+str(self.count)
@@ -419,7 +421,7 @@ class Chatbot:
                 self.add_answer(new_tag, user_input, self.last_lang)
                 self.last_tag = new_tag
 
-                print("Chatty: Thank you for your help / Obrigado pela ajuda !!")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": Thank you for your help / Obrigado pela ajuda !!")
 
                 # train the model
                 chatbot.train_model(max_iter=1200)
@@ -431,12 +433,12 @@ class Chatbot:
                     #Extract substring between <>
                     substring = response[response.find("<") + 1:response.find(">")]
                     if substring in self.entities.keys():
-                        response=response.replace(f'<{substring}>', self.entities[substring])
+                        response=response.replace(f'<{substring}>', Style.BRIGHT + Fore.BLUE + self.entities[substring] + Style.RESET_ALL)
 
                 entity= None
 
                 # print(language, tag)
-                print(f"Chatty: {response}")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}")
 
                 self.last_question = user_input
                 self.last_tag = tag
