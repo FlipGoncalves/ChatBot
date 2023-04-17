@@ -1383,6 +1383,49 @@
       },
       "entityType": "NA",
       "entities": []
+    },
+    {
+      "intent": "NotCorrect",
+      "text": [
+        {
+          "english": [
+            "That's not what i said",
+            "I didn't say that",
+            "That's not what i meant",
+            "I didn't mean it like that"
+          ],
+          "portuguese": [
+            "Não foi isso que eu disse",
+            "Eu não disse isso",
+            "Não era isso que queria dizer",
+            "Não queria dizer isso",
+            "Eu não queria dizer isso"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I'm sorry, what would be a good response to: "
+          ],
+          "portuguese": [
+            "Desculpa, o que seria uma boa resposta a: "
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "GreetingUserRequest",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
     }
   ]
 }

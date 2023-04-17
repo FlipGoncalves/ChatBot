@@ -1,5 +1,8 @@
 import nltk
 
+nltk.download('wordnet')
+nltk.download('stopwords')
+
 
 def load_stop_words(path):
     with open(path, 'r') as f:
@@ -9,14 +12,18 @@ def load_stop_words(path):
 
 class Tokenizer(object):
 
-    def __init__(self, stopwords_path, min_token_size=2):
+    def __init__(self, min_token_size=None, language=None, stemmer=None, lemmatizer=None):
+
         self.min_token_size = min_token_size
 
-        self.stemmer = nltk.stem.PorterStemmer()
+        self.stemmer = stemmer
         self.stemmer_cache = {}
 
+        self.lemmatizer = lemmatizer
+        self.lemmatizer_cache = {}
+
         # Note: Better keep stopwords to improve the performance for simple sentences (e.g. "How are you?")
-        # self.stopwords = load_stop_words(stopwords_path)
+        self.stopwords = nltk.corpus.stopwords.words(language) if language else None
 
     def tokenize(self, text: str):
 
@@ -36,12 +43,12 @@ class Tokenizer(object):
                 continue
 
             # Ignore tokens that don't meet the minimum size
-            # if len(token) < self.min_token_size:
-            #     continue
+            if self.min_token_size and len(token) < self.min_token_size:
+                continue
 
             # Remove stop words
-            # if token in self.stopwords:
-            #     continue
+            if self.stopwords and token in self.stopwords:
+                continue
 
             # Normalize to lowercase
             token = token.lower()
@@ -55,6 +62,16 @@ class Tokenizer(object):
                 else:
                     token = self.stemmer.stem(token)
                     self.stemmer_cache[token] = token
+
+            # Lemmatize tokens
+            if self.lemmatizer:
+
+                # Dynamic Programming to speed up the lemmatizer
+                if token in self.lemmatizer_cache:
+                    token = self.lemmatizer_cache[token]
+                else:
+                    token = self.lemmatizer.lemmatize(token)
+                    self.lemmatizer_cache[token] = token
 
             # Keep track of possible words for each token
             if token not in token_words:
