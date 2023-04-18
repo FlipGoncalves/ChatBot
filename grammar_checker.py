@@ -11,35 +11,39 @@ class GrammarChecker(object):
     def __init__(self):
 
         self.grammarEN = nltk.CFG.fromstring("""
+            S -> N
+            S -> ADJT N
             S -> NP VP
             S -> VP
             PP -> P NP
-            NP -> DT NP | N PP | N | ADJ N | ADV ADJ N | ADV ADJ | DT N | P | N NP
-            VP -> V NP | V PP | V NP PP | V | V PRT NP | V VP
-            ADJ -> 'ADJ'
-            ADV -> 'ADV'
+            NP -> DT NP | N PP | N | ADJT N | ADVB ADJT N | ADVB ADJT | DT N | P | N NP
+            VP -> V NP | V PP | V NP PP | V | V PRTT NP | V VP
+            ADJT -> 'ADJ'
+            ADVB -> 'ADV'
             DT -> 'DET'
             N -> 'NOUN'
             P -> 'PRON'
             V -> 'VERB'
-            PRT -> 'PRT'
+            PRTT -> 'PRT'
             X -> 'X'
             """)
         
         self.grammarPT = nltk.CFG.fromstring("""
+            S -> NOUN
+            S -> ADJT NOUN
             S -> NP VP
             S -> VP
             S -> S CONJ S
             PP -> P NP
-            NP -> DT NP | N PP | N | ADJ N | ADV ADJ N | ADV ADJ | DT N | P | PREP N | N NP
-            VP -> V NP | V PP | V NP PP | V
-            ADJ -> 'ADJ'
-            ADV -> 'ADV' | 'ADV-KS' | 'ADV-KS-REL'
+            NP -> DT NP | NOUN PP | NOUN | ADJT NOUN | ADVB ADJT NOUN | ADVB ADJT | DT NOUN | P | PREPP NOUN | NOUN NP
+            VP -> VERB NP | VERB PP | VERB NP PP | VERB
+            ADJT -> 'ADJ'
+            ADVB -> 'ADV' | 'ADV-KS' | 'ADV-KS-REL'
             DT -> 'ART'
-            N -> 'N' | 'NPROP'
+            NOUN -> 'N' | 'NPROP'
             P -> 'PROADJ' | 'PRO-KS' | 'PROPESS' | 'PRO-KS-REL' | 'PROSUB'
-            PREP -> 'PREP' | 'PREP|+'
-            V -> 'V' | 'VAUX'
+            PREPP -> 'PREP' | 'PREP|+'
+            VERB -> 'V' | 'VAUX'
             CONJ -> 'KS' | 'KC'
             """)
 
@@ -51,11 +55,12 @@ class GrammarChecker(object):
 
     def check_grammar(self, sentence:str):
         
+        sentence = sentence.replace('<NULL>', '')
         #EN
         sentence = sentence.strip('.,;:!?()[]{}')
         tokenization = word_tokenize(sentence)
         taggedEN = pos_tag(tokenization, tagset="universal")
-
+        
         new_sentenceEN = ""
         for t in taggedEN:
             new_sentenceEN = new_sentenceEN + t[1] + " "
@@ -63,7 +68,11 @@ class GrammarChecker(object):
         parsedEN = self.parserEN.parse(new_sentenceEN.split())
 
         for p in parsedEN:
-            return p
+            tree_string = str(p)
+            for token in taggedEN:
+                tree_string = tree_string.replace(token[1], token[0], 1)
+            tree = nltk.tree.Tree.fromstring(tree_string)
+            return tree
         
         #PT
 
@@ -76,6 +85,10 @@ class GrammarChecker(object):
         parsedPT = self.parserPT.parse(new_sentencePT.split())
 
         for p in parsedPT:
-            return p
+            tree_string = str(p)
+            for token in taggedPT:
+                tree_string = tree_string.replace(token[1], token[0], 1)
+            tree = nltk.tree.Tree.fromstring(tree_string)
+            return tree
         
         return None

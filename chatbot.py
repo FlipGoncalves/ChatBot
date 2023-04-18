@@ -375,13 +375,6 @@ class Chatbot:
             if not user_input:
                 continue
 
-            potential_tree = self.grammar_checker.check_grammar(user_input)
-
-            if potential_tree is None:
-                #Bad grammar
-                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
-                continue
-
             # Take entities from user input, only stays with the latest information
             entity= self.extract_entities(user_input)
 
@@ -389,6 +382,13 @@ class Chatbot:
                 entity=[(entity[0][1],entity[0][0])]
                 self.entities.update(entity)
                 user_input=user_input.replace(entity[0][1],'<NULL>')
+
+            potential_tree = self.grammar_checker.check_grammar(user_input)
+
+            if potential_tree is None:
+                #Bad grammar
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
+                continue
 
 
             # Process input
@@ -439,6 +439,9 @@ class Chatbot:
 
                 # train the model
                 chatbot.train_model(max_iter=1200)
+            elif tag == "SemanticTree":
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}")
+                self.last_tree.pretty_print()
 
             else:
                 temp = response
