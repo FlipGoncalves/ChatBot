@@ -440,7 +440,7 @@ class Chatbot:
                 # train the model
                 chatbot.train_model(max_iter=1200)
             elif tag == "SemanticTree":
-                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}{self.last_question}")
                 self.last_tree.pretty_print()
 
             else:

@@ -45,6 +45,7 @@ class GrammarChecker(object):
             PREPP -> 'PREP' | 'PREP|+'
             VERB -> 'V' | 'VAUX'
             CONJ -> 'KS' | 'KC'
+            EST -> 'N|EST'
             """)
 
         self.parserPT = nltk.parse.ChartParser(grammar=self.grammarPT)
@@ -64,13 +65,13 @@ class GrammarChecker(object):
         new_sentenceEN = ""
         for t in taggedEN:
             new_sentenceEN = new_sentenceEN + t[1] + " "
-
+        
         parsedEN = self.parserEN.parse(new_sentenceEN.split())
 
         for p in parsedEN:
             tree_string = str(p)
             for token in taggedEN:
-                tree_string = tree_string.replace(token[1], token[0], 1)
+                tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
             tree = nltk.tree.Tree.fromstring(tree_string)
             return tree
         
@@ -87,7 +88,7 @@ class GrammarChecker(object):
         for p in parsedPT:
             tree_string = str(p)
             for token in taggedPT:
-                tree_string = tree_string.replace(token[1], token[0], 1)
+                tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
             tree = nltk.tree.Tree.fromstring(tree_string)
             return tree
         
