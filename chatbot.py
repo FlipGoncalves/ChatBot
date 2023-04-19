@@ -401,10 +401,10 @@ class Chatbot:
 
             potential_tree = self.grammar_checker.check_grammar(user_input)
 
-            if potential_tree is None:
-                #Bad grammar
-                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
-                continue
+            # if potential_tree is None:
+            #     #Bad grammar
+            #     print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
+            #     continue
 
             if entity:
                 entity=[(entity[0][1],entity[0][0])]
@@ -512,6 +512,9 @@ class Chatbot:
                 data["intents"].append(data_intent)
                 if intent in self.extensions.keys():
                     data_intent["extension"]["function"] = self.extensions[intent]
+                else:
+                    data_intent["extension"]["function"] = ""
+
             json.dump(data, f)
 
 

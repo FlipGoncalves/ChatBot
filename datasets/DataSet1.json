@@ -23,13 +23,13 @@
       "responses": [
         {
           "english": [
-            "Hi human, please tell me your GeniSys user",
-            "Hello human, please tell me your GeniSys user",
-            "Hola human, please tell me your GeniSys user"
+            "Hi human, please tell me your Chatty user",
+            "Hello human, please tell me your Chatty user",
+            "Hola human, please tell me your Chatty user"
           ],
           "portuguese": [
-            "Olá humano, por favor indique o seu GeniSys user",
-            "Ei humano, por favor indique o seu GeniSys user"
+            "Olá humano, por favor indique o seu Chatty user",
+            "Ei humano, por favor indique o seu Chatty user"
           ]
         }
       ],
@@ -289,13 +289,13 @@
       "responses": [
         {
           "english": [
-            "You can call me Geni",
-            "You may call me Geni",
-            "Call me Geni"
+            "You can call me Chatty",
+            "You may call me Chatty",
+            "Call me Chatty"
           ],
           "portuguese": [
-            "Chamo me Geni",
-            "O meu nome é Geni"
+            "Chamo me Chatty",
+            "O meu nome é Chatty"
           ]
         }
       ],
@@ -332,13 +332,13 @@
       "responses": [
         {
           "english": [
-            "My name is GeniSys",
-            "GeniSys",
-            "My real name is GeniSys"
+            "My name is Chatty",
+            "Chatty",
+            "My real name is Chatty"
           ],
           "portuguese": [
-            "O meu nome completo é GeniSys",
-            "GeniSys"
+            "O meu nome completo é Chatty",
+            "Chatty"
           ]
         }
       ],
