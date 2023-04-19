@@ -24,13 +24,13 @@
             "responses": [
                 {
                     "english": [
-                        "Hi human, please tell me your Chatty user",
-                        "Hello human, please tell me your Chatty user",
-                        "Hola human, please tell me your Chatty user"
+                        "Hi human, please tell me your Chatty username",
+                        "Hello human, please tell me your Chatty username",
+                        "Hola human, please tell me your Chatty username"
                     ],
                     "portuguese": [
-                        "Ol\u00e1 humano, por favor indique o seu Chatty user",
-                        "Ei humano, por favor indique o seu Chatty user"
+                        "Ol\u00e1 humano, por favor indique o seu Chatty username",
+                        "Ei humano, por favor indique o seu Chatty username"
                     ]
                 }
             ],
@@ -44,25 +44,20 @@
             "text": [
                 {
                     "english": [
-                        "My user is <NULL>",
+                        "My username is <NULL>",
                         "This is <NULL>",
                         "I am <NULL>",
                         "It is <NULL>",
                         "My user is <NULL>",
                         "This is <NULL>",
                         "I am <NULL>",
-                        "It is <NULL>",
-                        "OK! hi <PERSON>, what can I do for you?",
-                        "OK! Hola <PERSON>, how can I help you?",
-                        "Cool! Hello <PERSON>, what can I do for you?",
-                        "Good! Hi <PERSON>, how can I help you?"
+                        "It is <NULL>"
                     ],
                     "portuguese": [
-                        "O meu user \u00e9 <NULL>",
-                        "Eu sou <NULL>",
-                        "\u00c9 <NULL>",
-                        "O meu user \u00e9 <NULL>",
-                        "Eu sou <NULL>",
+                        "O meu username \u00e9 <NULL>",
+                        "Eu sou o <NULL>",
+                        "Sou o <NULL>",
+                        "Chamo-me <NULL>",
                         "\u00c9 <NULL>"
                     ]
                 }
@@ -117,7 +112,7 @@
                         "Hello, how are you? I am great thanks!",
                         "Hello, I am good thank you, how are you?",
                         "Hi, I am great, how are you?",
-                        "Hi, how are you? I am great thanks!",
+                        "Hi, I am great thanks! How are you?",
                         "Hi, I am good thank you, how are you?",
                         "Hi, good thank you, how are you?"
                     ],
@@ -293,9 +288,8 @@
                         "Do you know what time it is?",
                         "Do you know the time?",
                         "Can you tell me the time?",
-                        "Tell me what time it is?",
-                        "Time",
-                        "Right now it is <TIME>"
+                        "Tell me the time",
+                        "Time"
                     ],
                     "portuguese": [
                         "Que horas s\u00e3o?",
@@ -627,11 +621,11 @@
                 {
                     "english": [
                         "You are very clever",
-                        "You are a very clever girl",
+                        "You are a very clever bot",
                         "You are very intelligent",
-                        "You are a very intelligent girl",
+                        "You are a very intelligent bot",
                         "You are a genious",
-                        "Clever girl",
+                        "Clever bot",
                         "Genious"
                     ],
                     "portuguese": [
@@ -858,7 +852,8 @@
                     "portuguese": [
                         "Eu gosto de <NULL>",
                         "Eu gosto imenso de <NULL>",
-                        "Eu adoro <NULL>"
+                        "Eu adoro <NULL>",
+                        "Eu amo <NULL>"
                     ]
                 }
             ],
@@ -1045,11 +1040,13 @@
             "text": [
                 {
                     "english": [
+                        "I'm bored",
                         "I'm bored, what should i do?",
                         "I'm bored, got any ideas?",
                         "Tell something to do, i'm bored"
                     ],
                     "portuguese": [
+                        "Estou aborrecido",
                         "Estou aborrecido, o que posso fazer?",
                         "Estou aborrecido, diz algo que possa fazer"
                     ]
@@ -1079,11 +1076,13 @@
             "text": [
                 {
                     "english": [
+                        "Can you walk",
                         "You can go for walks?",
-                        "How do we go on a walk?"
+                        "How do we go on a walk?",
+                        "Can you walk?"
                     ],
                     "portuguese": [
-                        "Consegues ir passear?",
+                        "Consegues andar?",
                         "Como \u00e9 que vamos passear?"
                     ]
                 }
@@ -1179,6 +1178,37 @@
                     "portuguese": [
                         "Desculpa, o que seria uma boa resposta a: ",
                         "Desculpa, o que seria uma boa resposta a: "
+                    ]
+                }
+            ],
+            "entities": [],
+            "extension": {
+                "function": ""
+            }
+        },
+        {
+            "intent": "SintaticTree",
+            "text": [
+                {
+                    "english": [
+                        "Show me the sintatic tree",
+                        "Can you show me the sintatic tree",
+                        "Can I see the sintatic tree"
+                    ],
+                    "portuguese": [
+                        "Posso ver a árvore sintática",
+                        "Mostra me a árvore sintática",
+                        "Podes me mostrar a árvore sintática"
+                    ]
+                }
+            ],
+            "responses": [
+                {
+                    "english": [
+                        "Here is the semantic tree from the last sentence:"
+                    ],
+                    "portuguese": [
+                        "Aqui est\u00e1 a \u00e1rvore sem\u00e2ntica:"
                     ]
                 }
             ],

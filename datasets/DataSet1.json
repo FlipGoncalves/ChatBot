@@ -1446,7 +1446,35 @@
       },
       "entityType": "NA",
       "entities": []
-    }
+    },
+    {
+      "intent": "SemanticTree",
+      "text": [
+          {
+              "english": [
+                  "Show me the semantic tree",
+                  "Can you show me the semantic tree",
+                  "Can I see the semantic tree"
+              ],
+              "portuguese": [
+                  "Posso ver a arvore semantica",
+                  "Mostra me a arvore semantica",
+                  "Podes me mostrar a arvore semantica"
+              ]
+          }
+      ],
+      "responses": [
+          {
+              "english": [
+                  "Here is the semantic tree from the last sentence:"
+              ],
+              "portuguese": [
+                  "Aqui est\u00e1 a \u00e1rvore sem\u00e2ntica:"
+              ]
+          }
+      ],
+      "entities": []
+  }
   ]
 }
     

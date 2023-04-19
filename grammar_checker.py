@@ -12,41 +12,53 @@ class GrammarChecker(object):
 
         self.grammarEN = nltk.CFG.fromstring("""
             S -> N
-            S -> ADJT N
+            S -> ADJ N
+            S -> N P 
             S -> NP VP
             S -> VP
+            S -> ADV VP
+            S -> V P ADP N
+            S -> P VP
             PP -> P NP
-            NP -> DT NP | N PP | N | ADJT N | ADVB ADJT N | ADVB ADJT | DT N | P | N NP | PP
-            VP -> V NP | V PP | V NP PP | V | V PRTT NP | V VP
-            ADJT -> 'ADJ'
-            ADVB -> 'ADV'
+            NP -> DT NP | N PP | N | ADJ N | ADV ADJ N | ADV ADJ | DT N | P | N NP | PP
+            VP -> V NP | V PP | V NP PP | V | V PRT NP | V VP | P VP | V ADJ | ADP VP | PRT V | PRT V VP | V ADV VP | V ADP
+            ADJ -> 'ADJ'
+            ADV -> 'ADV'
             DT -> 'DET'
             N -> 'NOUN'
             P -> 'PRON'
             V -> 'VERB'
-            PRTT -> 'PRT'
+            PRT -> 'PRT'
             X -> 'X'
             ADP -> 'ADP'
             """)
         
         self.grammarPT = nltk.CFG.fromstring("""
             S -> NOUN
-            S -> ADJT NOUN
+            S -> ADJ NOUN
             S -> NP VP
             S -> VP
+            S -> NOUN P
             S -> S CONJ S
+            S -> CONJ NP VP
+            S -> CONJ VP
+            S -> CONJ NP
+            S -> ADV PCP
+            S -> PCP VP
+            S -> ADV NP
             PP -> P NP
-            NP -> DT NP | NOUN PP | NOUN | ADJT NOUN | ADVB ADJT NOUN | ADVB ADJT | DT NOUN | P | PREPP NOUN | NOUN NP
-            VP -> VERB NP | VERB PP | VERB NP PP | VERB
-            ADJT -> 'ADJ'
-            ADVB -> 'ADV' | 'ADV-KS' | 'ADV-KS-REL'
+            NP -> DT NP | NOUN PP | NOUN | ADJ NOUN | ADV ADJ NOUN | ADV ADJ | DT NOUN | P | PREP NOUN | NOUN NP | PP | NOUN ADV
+            VP -> VERB NP | VERB PP | VERB NP PP | VERB | VERB VP | P VP | VERB ADJ | VERB PREP P | PREP VP | VP P | ADV VP
+            ADJ -> 'ADJ'
+            ADV -> 'ADV' | 'ADV-KS' | 'ADV-KS-REL'
             DT -> 'ART'
             NOUN -> 'N' | 'NPROP'
             P -> 'PROADJ' | 'PRO-KS' | 'PROPESS' | 'PRO-KS-REL' | 'PROSUB'
-            PREPP -> 'PREP' | 'PREP|+'
+            PREP -> 'PREP' | 'PREP|+'
             VERB -> 'V' | 'VAUX'
             CONJ -> 'KS' | 'KC'
             EST -> 'N|EST'
+            PCP -> 'PCP'
             """)
 
         self.parserPT = nltk.parse.ChartParser(grammar=self.grammarPT)
@@ -56,6 +68,8 @@ class GrammarChecker(object):
         self.portuguese_tagger = joblib.load('POS_tagger_unigram.pkl')
 
     def check_grammar(self, sentence:str):
+
+        print("Sentence: " + sentence)
         
         sentence = sentence.replace('<NULL>', '')
         #EN
@@ -65,32 +79,42 @@ class GrammarChecker(object):
         
         new_sentenceEN = ""
         for t in taggedEN:
-            new_sentenceEN = new_sentenceEN + t[1] + " "
+            if t[0] not in ".,;:!?()[]{}":
+                new_sentenceEN = new_sentenceEN + t[1] + " "
 
-        parsedEN = self.parserEN.parse(new_sentenceEN.split())
+        print("EN sentence: " + new_sentenceEN)
 
-        for p in parsedEN:
-            tree_string = str(p)
-            for token in taggedEN:
-                tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
-            tree = nltk.tree.Tree.fromstring(tree_string)
-            return tree
-        
+        try:
+            parsedEN = self.parserEN.parse(new_sentenceEN.split())
+            for p in parsedEN:
+                tree_string = str(p)
+                for token in taggedEN:
+                    tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
+                tree = nltk.tree.Tree.fromstring(tree_string)
+                return tree
+        except:
+            pass
         #PT
 
         taggedPT = self.portuguese_tagger.tag(tokenization)
 
         new_sentencePT = ""
         for t in taggedPT:
-            new_sentencePT = new_sentencePT + t[1] + " "
+            if t[0] not in ".,;:!?()[]{}":
+                new_sentencePT = new_sentencePT + t[1] + " "
 
-        parsedPT = self.parserPT.parse(new_sentencePT.split())
+        print("PT sentence: " + new_sentencePT)
 
-        for p in parsedPT:
-            tree_string = str(p)
-            for token in taggedPT:
-                tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
-            tree = nltk.tree.Tree.fromstring(tree_string)
-            return tree
+        try:
+            parsedPT = self.parserPT.parse(new_sentencePT.split())
+
+            for p in parsedPT:
+                tree_string = str(p)
+                for token in taggedPT:
+                    tree_string = tree_string.replace(token[1] + ")", token[0] + ")", 1)
+                tree = nltk.tree.Tree.fromstring(tree_string)
+                return tree
+        except:
+            pass
         
         return None

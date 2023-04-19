@@ -396,23 +396,29 @@ class Chatbot:
             if not user_input:
                 continue
 
+            potential_tree = self.grammar_checker.check_grammar(user_input)
+
             # Take entities from user input, only stays with the latest information
             entity= self.extract_entities(user_input)
 
-            potential_tree = self.grammar_checker.check_grammar(user_input)
+            if potential_tree is None:
+                #Bad grammar
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
+                continue
 
-            # if potential_tree is None:
-            #     #Bad grammar
-            #     print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
-            #     continue
+            #print("Potential tree: " + str(potential_tree))
+            #potential_tree.pretty_print()
 
             if entity:
                 entity=[(entity[0][1],entity[0][0])]
                 self.entities.update(entity)
                 user_input=user_input.replace(entity[0][1],'<NULL>')
 
+            #print(self.entities)
             # Process input
             tag, language = self.predict_intent(user_input)
+
+            #print("Tag: " + tag)
             
             # Check if forgottenEntity is not None
             if self.forgottenEntity is not None:
@@ -459,9 +465,11 @@ class Chatbot:
 
                 # train the model
                 chatbot.train_model(max_iter=1200)
-            elif tag == "SemanticTree":
+            elif tag == "SintaticTree":
                 print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + f": {response}{self.last_question}")
                 self.last_tree.pretty_print()
+                self.last_question = user_input
+                self.last_tree = potential_tree
 
             else:
                 temp = response
