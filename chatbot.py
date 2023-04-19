@@ -1,5 +1,7 @@
 import itertools
 import json
+import time
+
 import numpy as np
 import nltk
 import random
@@ -67,6 +69,9 @@ class Chatbot:
         self.questions = {}
         self.answers = {}
 
+        # Handle extensions
+        self.extensions = {}
+
         # Handle intents
         self.intents = []
 
@@ -125,6 +130,9 @@ class Chatbot:
 
         # Obtain answers
         answers = entry['responses'][0]
+
+        # Obtain extensions
+        extensions = entry['extension']["function"]
         
         self.cacheEntities[intent] = entry['entities']
 
@@ -151,6 +159,10 @@ class Chatbot:
                 self.add_answer(intent, answer, language)
 
                 # TODO: Keep track of answer tokens
+
+        # Add extensions to database
+        self.add_extension(intent, extensions)
+
 
     def add_token(self, token, words, language):
 
@@ -198,6 +210,15 @@ class Chatbot:
         if intent in self.cacheEntities.keys() and self.cacheEntities[intent] != []:
             self.answers[language][intent+'Entity']=self.cacheEntities[intent]
             # print(intent+"Entity")
+
+    def add_extension(self, intent, function):
+
+        if intent not in self.extensions:
+            self.extensions[intent] = function
+
+    def get_time(self):
+        current_time = time.localtime()
+        return str(current_time[3]) + ":" + str(current_time[4]) 
 
     def detect_language(self, tokens):
 
@@ -403,7 +424,7 @@ class Chatbot:
                 # print(self.entities)
                 # Reset forgotten entity
                 self.forgottenEntity = None
-
+            
             response = random.choice(self.answers[language][tag])
 
             if tag == "NotCorrect":
@@ -451,6 +472,9 @@ class Chatbot:
                     substring = response[response.find("<") + 1:response.find(">")]
                     if substring in self.entities.keys():
                         response=response.replace(f'<{substring}>', Style.BRIGHT + Fore.BLUE + self.entities[substring] + Style.RESET_ALL)
+                    if self.extensions[tag] != "":
+                        response=response.replace(f'<{substring}>', getattr(self, self.extensions[tag])())
+
 
                 entity= None
 
@@ -474,7 +498,7 @@ class Chatbot:
         with open("datasets/DataSetSave.json", "w") as f:
             data = {"intents": []}
             for intent in self.intents:
-                data_intent = {"intent": intent, "text": [], "responses": [], "entities": []}
+                data_intent = {"intent": intent, "text": [], "responses": [], "entities": [], "extension": {}}
                 data_text = {}
                 data_resp = {}
                 for language in self.questions.keys():
@@ -487,6 +511,8 @@ class Chatbot:
                 if intent in self.cacheEntities.keys():
                     data_intent["entities"] = self.cacheEntities[intent]
                 data["intents"].append(data_intent)
+                if intent in self.extensions.keys():
+                    data_intent["extension"]["function"] = self.extensions[intent]
             json.dump(data, f)
 
 

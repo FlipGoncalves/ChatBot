@@ -44,7 +44,6 @@
         "out": "GreetingUserRequest",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -87,7 +86,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "",
         "entities": true,
         "english": [
           "Hi %%PERSON%%! How can I help?",
@@ -106,7 +105,6 @@
         "out": "",
         "clear": true
       },
-      "entityType": "NA",
       "entities": ["PERSON"]
     },
     {
@@ -158,7 +156,6 @@
         "out": "CourtesyGreetingUserRequest",
         "clear": true
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -192,7 +189,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.updateHuman",
+        "function": "",
         "entities": true,
         "english": [
           "Great %%PERSON%%! How can I help?",
@@ -211,7 +208,6 @@
         "out": "",
         "clear": true
       },
-      "entityType": "NA",
       "entities": ["HUMAN"]
     },
     {
@@ -250,7 +246,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.getCurrentHuman",
+        "function": "",
         "entities": false,
         "english": [
           "You are %%PERSON%%! How can I help?",
@@ -270,7 +266,6 @@
         "out": "CurrentHumanQuery",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -315,7 +310,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -359,7 +353,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -379,35 +372,35 @@
             "Que horas são?",
             "Sabes que horas são?",
             "Podes me dizer as horas?",
-            "Diz me que horas são, por favor"
+            "Diz me que horas são, por favor",
+            "Horas"
           ]
         }
       ],
       "responses": [
         {
           "english": [
-            "One moment",
-            "One sec",
-            "One second"
+            "The time is <TIME>",
+            "Right now it is <TIME>",
+            "It is around <TIME>"
           ],
           "portuguese": [
-            "Espere um pouco",
-            "Um segudo",
-            "Só um bocadinho"
+            "É <TIME>",
+            "São <TIME>"
           ]
         }
       ],
       "extension": {
-        "function": "extensions.gTime.getTime",
+        "function": "get_time",
         "entities": false,
         "english": [
-          "The time is %%TIME%%",
-          "Right now it is %%TIME%%",
-          "It is around %%TIME%%"
+          "The time is <TIME>",
+          "Right now it is <TIME>",
+          "It is around <TIME>"
         ],
         "portuguese": [
-          "É %%TIME%%",
-          "São %%TIME%%"
+          "É <TIME>",
+          "São <TIME>"
         ]
       },
       "context": {
@@ -415,7 +408,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -464,7 +456,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -511,7 +502,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -604,7 +594,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -648,7 +637,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -692,7 +680,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -738,7 +725,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -773,7 +759,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gHumans.getHumanByFace",
+        "function": "",
         "entities": false,
         "english": [
           "Hi %%PERSON%%, how are you?",
@@ -790,7 +776,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -835,7 +820,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1031,7 +1015,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1062,7 +1045,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gSharedLikes.checkLikes",
+        "function": "",
         "entities": true,
         "english": [
           "I also like <LIKE>"
@@ -1110,7 +1093,7 @@
         }
       ],
       "extension": {
-        "function": "extensions.gDislikes.getDislikes",
+        "function": "",
         "entities": true,
         "english": [
           "I hate %%DISLIKE%%",
@@ -1126,7 +1109,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
 
@@ -1167,7 +1149,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1208,7 +1189,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1252,7 +1232,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1295,7 +1274,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1337,7 +1315,6 @@
         "out": "",
         "clear": false
       },
-      "entityType": "NA",
       "entities": []
     },
     {
@@ -1379,6 +1356,49 @@
       "context": {
         "in": "",
         "out": "",
+        "clear": false
+      },
+      "entityType": "NA",
+      "entities": []
+    },
+    {
+      "intent": "NotCorrect",
+      "text": [
+        {
+          "english": [
+            "That's not what i said",
+            "I didn't say that",
+            "That's not what i meant",
+            "I didn't mean it like that"
+          ],
+          "portuguese": [
+            "Não foi isso que eu disse",
+            "Eu não disse isso",
+            "Não era isso que queria dizer",
+            "Não queria dizer isso",
+            "Eu não queria dizer isso"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "english": [
+            "I'm sorry, what would be a good response to: "
+          ],
+          "portuguese": [
+            "Desculpa, o que seria uma boa resposta a: "
+          ]
+        }
+      ],
+      "extension": {
+        "function": "",
+        "entities": false,
+        "english": [],
+        "portuguese": []
+      },
+      "context": {
+        "in": "",
+        "out": "GreetingUserRequest",
         "clear": false
       },
       "entityType": "NA",
