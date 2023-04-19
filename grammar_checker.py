@@ -16,7 +16,7 @@ class GrammarChecker(object):
             S -> NP VP
             S -> VP
             PP -> P NP
-            NP -> DT NP | N PP | N | ADJT N | ADVB ADJT N | ADVB ADJT | DT N | P | N NP
+            NP -> DT NP | N PP | N | ADJT N | ADVB ADJT N | ADVB ADJT | DT N | P | N NP | PP
             VP -> V NP | V PP | V NP PP | V | V PRTT NP | V VP
             ADJT -> 'ADJ'
             ADVB -> 'ADV'
@@ -26,6 +26,7 @@ class GrammarChecker(object):
             V -> 'VERB'
             PRTT -> 'PRT'
             X -> 'X'
+            ADP -> 'ADP'
             """)
         
         self.grammarPT = nltk.CFG.fromstring("""
@@ -65,7 +66,7 @@ class GrammarChecker(object):
         new_sentenceEN = ""
         for t in taggedEN:
             new_sentenceEN = new_sentenceEN + t[1] + " "
-        
+
         parsedEN = self.parserEN.parse(new_sentenceEN.split())
 
         for p in parsedEN:

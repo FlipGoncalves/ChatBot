@@ -399,11 +399,6 @@ class Chatbot:
             # Take entities from user input, only stays with the latest information
             entity= self.extract_entities(user_input)
 
-            if entity:
-                entity=[(entity[0][1],entity[0][0])]
-                self.entities.update(entity)
-                user_input=user_input.replace(entity[0][1],'<NULL>')
-
             potential_tree = self.grammar_checker.check_grammar(user_input)
 
             if potential_tree is None:
@@ -411,6 +406,10 @@ class Chatbot:
                 print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
                 continue
 
+            if entity:
+                entity=[(entity[0][1],entity[0][0])]
+                self.entities.update(entity)
+                user_input=user_input.replace(entity[0][1],'<NULL>')
 
             # Process input
             tag, language = self.predict_intent(user_input)
