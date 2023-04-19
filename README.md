@@ -18,4 +18,5 @@ It supports the following features:
 
 ## Setup
 The program needs to run the following commands in a python compiler:
+python3 -m pip install -r requirements.txt
 python3 -m spacy download en_core_web_sm
