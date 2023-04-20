@@ -1,9 +1,10 @@
 import nltk
 import joblib
 
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('universal_tagset')
+
 from nltk import pos_tag, word_tokenize, RegexpParser
 
 class GrammarChecker(object):
@@ -48,7 +49,7 @@ class GrammarChecker(object):
             S -> ADV NP
             PP -> P NP
             NP -> DT NP | NOUN PP | NOUN | ADJ NOUN | ADV ADJ NOUN | ADV ADJ | DT NOUN | P | PREP NOUN | NOUN NP | PP | NOUN ADV
-            VP -> VERB NP | VERB PP | VERB NP PP | VERB | VERB VP | P VP | VERB ADJ | VERB PREP P | PREP VP | VP P | ADV VP
+            VP -> VERB NP | VERB PP | VERB NP PP | VERB | VERB VP | P VP | VERB ADJ | VERB PREP P | PREP VP | VP P | ADV VP | VP ADV
             ADJ -> 'ADJ'
             ADV -> 'ADV' | 'ADV-KS' | 'ADV-KS-REL'
             DT -> 'ART'
@@ -68,8 +69,6 @@ class GrammarChecker(object):
         self.portuguese_tagger = joblib.load('POS_tagger_unigram.pkl')
 
     def check_grammar(self, sentence:str):
-
-        print("Sentence: " + sentence)
         
         sentence = sentence.replace('<NULL>', '')
         #EN
@@ -81,8 +80,6 @@ class GrammarChecker(object):
         for t in taggedEN:
             if t[0] not in ".,;:!?()[]{}":
                 new_sentenceEN = new_sentenceEN + t[1] + " "
-
-        print("EN sentence: " + new_sentenceEN)
 
         try:
             parsedEN = self.parserEN.parse(new_sentenceEN.split())
@@ -102,8 +99,6 @@ class GrammarChecker(object):
         for t in taggedPT:
             if t[0] not in ".,;:!?()[]{}":
                 new_sentencePT = new_sentencePT + t[1] + " "
-
-        print("PT sentence: " + new_sentencePT)
 
         try:
             parsedPT = self.parserPT.parse(new_sentencePT.split())

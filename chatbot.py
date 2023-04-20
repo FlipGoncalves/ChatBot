@@ -6,6 +6,7 @@ import numpy as np
 import nltk
 import random
 import string
+import re
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neural_network import MLPClassifier
@@ -15,12 +16,15 @@ from nltk.stem import WordNetLemmatizer
 from tokenizer import Tokenizer
 from grammar_checker import GrammarChecker
 
-# nltk.download('wordnet')
-# nltk.download('stopwords')
-
 import spacy
 
 from colorama import Fore, Style
+
+# nltk.download('wordnet')
+# nltk.download('stopwords')
+
+import warnings 
+warnings.filterwarnings("ignore")
 
 def apply_corrections(tokens, is_question):
 
@@ -49,10 +53,10 @@ def apply_corrections(tokens, is_question):
                 selected = True
 
             else:
-                print('Invalid input. Please try again.')
+                print('\tInvalid input. Please try again.')
 
         else:
-            print('Invalid input. Please try again.')
+            print('\tInvalid input. Please try again.')
 
     return tokens
 
@@ -95,7 +99,7 @@ class Chatbot:
         # Model
         self.model = None
         self.lemmatizer = WordNetLemmatizer()
-        self.tf_idf_model = TfidfVectorizer()
+        self.tf_idf_model = TfidfVectorizer(tokenizer=self.tokenizerLemm, stop_words='english')
 
         # Handle all tokens
         self.token_words = {}
@@ -239,7 +243,7 @@ class Chatbot:
 
         return max(languages_detected, key=lambda key: languages_detected[key])
 
-    def train_model(self, max_iter=3000):
+    def train_model(self):
 
         corpus = []
         tokens = []
@@ -258,34 +262,17 @@ class Chatbot:
 
         for i, tag in enumerate(tags):
             y_train[i][self.intents.index(tag)] = 1
-        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='lbfgs', max_iter=max_iter)
+        self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='identity', solver='adam', learning_rate='invscaling', max_iter=3000)
         self.model.fit(X_train, y_train)
-
-        # all_words = []
-        # documents = []
-        # tags = []
-        # for intent in self.intents:
-        #     for pattern in self.questions[language]:
-        #         words = self.tokenize(pattern)
-        #         all_words.extend(words)
-        #         documents.append(pattern)
-        #         tags.append(intent)
-
-        # all_words = [self.lemmatizer.lemmatize(word.lower()) for word in all_words if word not in string.punctuation]
-        # self.tf_idf_model.fit_transform(all_words)
-        # X_train = self.tf_idf_model.transform(documents)
-        # y_train = np.zeros((len(documents), len(self.intents)))
-
-        # for i, tag in enumerate(tags):
-        #     y_train[i][self.intents.index(tag)] = 1
-        # self.model = MLPClassifier(hidden_layer_sizes=(8, 8, 8), activation='relu', solver='adam', max_iter=max_iter)
-        # self.model.fit(X_train, y_train)
 
     def predict_intent(self, message):
 
         tokens, lang = self.tokenize(message, message.endswith('?'))
         message_vector = self.tf_idf_model.transform([" ".join(tokens)])
-        predicted_tag = self.intents[np.argmax(self.model.predict(message_vector))]
+        pred = self.model.predict(message_vector)
+        if sum(list(pred)[0]) == 0:
+            return "Anything", lang
+        predicted_tag = self.intents[np.argmax(pred)]
 
         return predicted_tag, lang
     
@@ -297,6 +284,11 @@ class Chatbot:
         doc = nlp(text)
         entities = [(ent.text, ent.label_) for ent in doc.ents]
         return entities
+    
+    def tokenizerLemm(self, text):
+        tokens = nltk.word_tokenize(text)
+        tokens = [re.sub(r'[^\w\s]', '', token) for token in tokens]
+        return tokens
 
     def tokenize(self, user_input, is_question):
 
@@ -341,6 +333,8 @@ class Chatbot:
         # Add token words to database
         i=0
         for token in tokenized_input:
+            if i >= len(tokens):
+                break
             if tokens[i] != "<NULL>":
                 self.add_token(token, tokens[i] if tokens[i] != "" else tokenized_input[token], language)
             i+=1
@@ -389,7 +383,7 @@ class Chatbot:
                 # If there are no possible corrections
                 if len(possible_corrections) == 0:
                     if i==len(tokenized_input):
-                        print("entity")
+                        # print("entity")
                         self.forgottenEntity=tokenized_input[token][-1]
                         tokens.append(['<NULL>'])
                     else:
@@ -430,13 +424,10 @@ class Chatbot:
 
             potential_tree = self.grammar_checker.check_grammar(user_input)
 
-            # Take entities from user input, only stays with the latest information
-            # entity= self.extract_entities(user_input)
-
-            # if potential_tree is None:
-            #     #Bad grammar
-            #     print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
-            #     continue
+            if potential_tree is None:
+                #Bad grammar
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": You should check your grammar!\n\t Devias verificar a tua gramática!")
+                continue
 
             #print("Potential tree: " + str(potential_tree))
             #potential_tree.pretty_print()
@@ -457,7 +448,7 @@ class Chatbot:
             
             # Check if forgottenEntity is not None
             if self.forgottenEntity is not None:
-                print(self.forgottenEntity)
+                # print(self.forgottenEntity)
                 # Add forgotten entity to entities
                 # print("using entities")
                 if tag+'Entity' in self.answers[language].keys():
@@ -466,8 +457,8 @@ class Chatbot:
                 # Reset forgotten entity
                 self.forgottenEntity = None
 
-            print(self.entities)
-            print(tag)
+            # print(self.entities)
+            # print(tag)
             
             response = random.choice(self.answers[language][tag])
 
@@ -500,7 +491,7 @@ class Chatbot:
                 self.add_answer(new_tag, user_input, self.last_lang)
                 self.last_tag = new_tag
 
-                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": Thank you for your help / Obrigado pela ajuda !!")
+                print(Style.BRIGHT + Fore.GREEN + 'Chatty' + Style.RESET_ALL + ": Thank you for your help\n\tObrigado pela ajuda !!")
 
                 # train the model
                 chatbot.train_model()
