@@ -5,18 +5,11 @@
             "text": [
                 {
                     "english": [
-                        "Hi",
-                        "Hi there",
-                        "Hola",
                         "Hello",
-                        "Hello there",
-                        "Hya",
-                        "Hya there",
-                        "Hola human, please tell me your Chatty user"
+                        "Hello there"
                     ],
                     "portuguese": [
                         "Ol\u00e1",
-                        "Ei",
                         "Oi"
                     ]
                 }
@@ -45,25 +38,11 @@
                 {
                     "english": [
                         "My user is <NULL>",
-                        "This is <NULL>",
-                        "I am <NULL>",
-                        "It is <NULL>",
-                        "My user is <NULL>",
-                        "This is <NULL>",
-                        "I am <NULL>",
-                        "It is <NULL>",
-                        "OK! hi <PERSON>, what can I do for you?",
-                        "OK! Hola <PERSON>, how can I help you?",
-                        "Cool! Hello <PERSON>, what can I do for you?",
-                        "Good! Hi <PERSON>, how can I help you?"
+                        "I am <NULL>"
                     ],
                     "portuguese": [
                         "O meu user \u00e9 <NULL>",
-                        "Eu sou <NULL>",
-                        "\u00c9 <NULL>",
-                        "O meu user \u00e9 <NULL>",
-                        "Eu sou <NULL>",
-                        "\u00c9 <NULL>"
+                        "Eu sou <NULL>"
                     ]
                 }
             ],
@@ -95,18 +74,12 @@
                 {
                     "english": [
                         "How are you?",
-                        "Hi how are you?",
-                        "Hello how are you?",
-                        "Hola how are you?",
                         "How are you doing?",
-                        "Hope you are doing well?",
-                        "Hello hope you are doing well?"
+                        "Hope you are doing well?"
                     ],
                     "portuguese": [
                         "Como est\u00e1s?",
-                        "Ol\u00e1, como est\u00e1s?",
-                        "Est\u00e1 tudo bem?",
-                        "Ol\u00e1, tudo bem?"
+                        "Est\u00e1 tudo bem?"
                     ]
                 }
             ],
@@ -163,7 +136,7 @@
                 }
             ],
             "entities": [
-                "HUMAN"
+                "PERSON"
             ],
             "extension": {
                 "function": ""
@@ -176,17 +149,10 @@
                     "english": [
                         "What is my name?",
                         "What do you call me?",
-                        "Who do you think I am?",
-                        "What do you think I am?",
-                        "Who are you talking to?",
-                        "What name do you call me by?",
-                        "Tell me my name",
-                        "<PERSON>, what can I do for you?",
-                        "Your name is <PERSON>, how can I help you?",
-                        "They call you <PERSON>, what can I do for you?"
+                        "Tell me my name"
                     ],
                     "portuguese": [
-                        "Qual \u00e9 o meu nome?",
+                        "Qual é o meu nome?",
                         "Como me chamo?"
                     ]
                 }
@@ -218,9 +184,6 @@
                 {
                     "english": [
                         "What is your name?",
-                        "What could I call you?",
-                        "What can I call you?",
-                        "What do your friends call you?",
                         "Who are you?",
                         "Tell me your name?"
                     ],
@@ -249,59 +212,17 @@
             }
         },
         {
-            "intent": "RealNameQuery",
-            "text": [
-                {
-                    "english": [
-                        "What is your real name?",
-                        "What is your real name please?",
-                        "What's your real name?",
-                        "Tell me your real name?",
-                        "Your real name?",
-                        "Your real name please?"
-                    ],
-                    "portuguese": [
-                        "Qual \u00e9 o teu nome completo?"
-                    ]
-                }
-            ],
-            "responses": [
-                {
-                    "english": [
-                        "My name is Chatty",
-                        "Chatty",
-                        "My real name is Chatty"
-                    ],
-                    "portuguese": [
-                        "O meu nome completo \u00e9 Chatty",
-                        "Chatty"
-                    ]
-                }
-            ],
-            "entities": [],
-            "extension": {
-                "function": ""
-            }
-        },
-        {
             "intent": "TimeQuery",
             "text": [
                 {
                     "english": [
                         "What is the time?",
-                        "What's the time?",
-                        "Do you know what time it is?",
-                        "Do you know the time?",
                         "Can you tell me the time?",
-                        "Tell me what time it is?",
-                        "Time",
-                        "Right now it is <TIME>"
+                        "Time"
                     ],
                     "portuguese": [
                         "Que horas s\u00e3o?",
                         "Sabes que horas s\u00e3o?",
-                        "Podes me dizer as horas?",
-                        "Diz me que horas s\u00e3o, por favor",
                         "Horas"
                     ]
                 }
@@ -329,17 +250,10 @@
             "text": [
                 {
                     "english": [
-                        "OK thank you",
-                        "OK thanks",
-                        "OK",
                         "Thanks",
-                        "Thank you",
-                        "That's helpful"
+                        "Thank you"
                     ],
                     "portuguese": [
-                        "OK obrigado",
-                        "OK muito obrigado",
-                        "OK",
                         "Obrigado",
                         "Muito obrigado"
                     ]
@@ -370,17 +284,11 @@
                 {
                     "english": [
                         "I am not talking to you",
-                        "I was not talking to you",
-                        "Not talking to you",
-                        "Wasn't for you",
-                        "Wasn't meant for you",
-                        "Wasn't communicating to you",
-                        "Wasn't speaking to you"
+                        "I was not talking to you"
                     ],
                     "portuguese": [
                         "N\u00e3o estou a falar para ti",
-                        "N\u00e3o estava a falar para ti",
-                        "N\u00e3o era para ti"
+                        "N\u00e3o estava a falar para ti"
                     ]
                 }
             ],
@@ -408,15 +316,9 @@
                 {
                     "english": [
                         "Do you understand what I am saying",
-                        "Do you understand me",
-                        "Do you know what I am saying",
-                        "Do you get me",
-                        "Comprendo",
-                        "Know what I mean"
+                        "Do you know what I am saying"
                     ],
                     "portuguese": [
-                        "Compreendes o que estou a dizer?",
-                        "Compreendes me?",
                         "Sabes o que estou a dizer?"
                     ]
                 }
@@ -445,17 +347,10 @@
             "text": [
                 {
                     "english": [
-                        "Be quiet",
                         "Shut up",
-                        "Stop talking",
-                        "Enough talking",
-                        "Please be quiet",
-                        "Quiet",
-                        "Shhh"
+                        "Stop talking"
                     ],
                     "portuguese": [
-                        "Para de falar",
-                        "Por favor cala te",
                         "Cala te",
                         "Silencio"
                     ]
@@ -479,54 +374,16 @@
             }
         },
         {
-            "intent": "Swearing",
-            "text": [
-                {
-                    "english": [
-                        "fuck off",
-                        "fuck",
-                        "twat",
-                        "shit"
-                    ],
-                    "portuguese": [
-                        "vai \u00e1 merda",
-                        "merda",
-                        "fodasse"
-                    ]
-                }
-            ],
-            "responses": [
-                {
-                    "english": [
-                        "Please do not swear",
-                        "How rude",
-                        "That is not very nice"
-                    ],
-                    "portuguese": [
-                        "Nada de palavr\u00f5es por favor",
-                        "Que linguagem"
-                    ]
-                }
-            ],
-            "entities": [],
-            "extension": {
-                "function": ""
-            }
-        },
-        {
             "intent": "GoodBye",
             "text": [
                 {
                     "english": [
                         "Bye",
-                        "Adios",
-                        "See you later",
                         "Goodbye"
                     ],
                     "portuguese": [
                         "Adeus",
-                        "At\u00e9 logo",
-                        "Tchau"
+                        "At\u00e9 logo"
                     ]
                 }
             ],
@@ -553,17 +410,13 @@
             "text": [
                 {
                     "english": [
-                        "Thanks, bye",
-                        "Thanks for the help, goodbye",
-                        "Thank you, bye",
-                        "Thank you, goodbye",
-                        "Thanks goodbye",
-                        "Thanks good bye"
+                        "Thanks bye",
+                        "Thank you bye",
+                        "Thank you goodbye",
+                        "Thanks goodbye"
                     ],
                     "portuguese": [
-                        "Obrigado, adeus",
-                        "Obrigado, at\u00e9 logo",
-                        "Obrigado, tchau"
+                        "Obrigado, adeus"
                     ]
                 }
             ],
@@ -586,53 +439,13 @@
             }
         },
         {
-            "intent": "WhoAmI",
-            "text": [
-                {
-                    "english": [
-                        "Can you see me?",
-                        "Do you see me?",
-                        "Can you see anyone in the camera?",
-                        "Do you see anyone in the camera?",
-                        "Identify me",
-                        "Who am I please"
-                    ],
-                    "portuguese": [
-                        "Consegues me ver?",
-                        "Consegues ver algu\u00e9m com a c\u00e2mara?",
-                        "Quem sou eu?"
-                    ]
-                }
-            ],
-            "responses": [
-                {
-                    "english": [
-                        "Let me see",
-                        "Please look at the camera"
-                    ],
-                    "portuguese": [
-                        "Deixa me c\u00e1 ver",
-                        "Por favor olhe para a c\u00e2mara"
-                    ]
-                }
-            ],
-            "entities": [],
-            "extension": {
-                "function": ""
-            }
-        },
-        {
             "intent": "Clever",
             "text": [
                 {
                     "english": [
                         "You are very clever",
-                        "You are a very clever girl",
                         "You are very intelligent",
-                        "You are a very intelligent girl",
-                        "You are a genious",
-                        "Clever girl",
-                        "Genious"
+                        "You are a genious"
                     ],
                     "portuguese": [
                         "\u00c9s muito esperto",
@@ -664,11 +477,7 @@
                     "english": [
                         "Tell me a joke",
                         "Do you know any jokes",
-                        "How about a joke",
-                        "Give me a joke",
-                        "Make me laugh",
-                        "I need cheering up",
-                        "Two hydrogen atoms walk into a bar. One says, 'I've lost my electron.' The other says, 'Are you sure?' The first replies, 'Yes, I'm positive...'"
+                        "Make me laugh"
                     ],
                     "portuguese": [
                         "Diz me uma piada",
@@ -851,14 +660,10 @@
                 {
                     "english": [
                         "I like <NULL>",
-                        "I really like <NULL>",
-                        "I love <NULL>",
-                        "I adore <NULL>"
+                        "I love <NULL>"
                     ],
                     "portuguese": [
-                        "Eu gosto de <NULL>",
-                        "Eu gosto imenso de <NULL>",
-                        "Eu adoro <NULL>"
+                        "Eu gosto de <NULL>"
                     ]
                 }
             ],
@@ -868,7 +673,7 @@
                         "I also like <LIKE>"
                     ],
                     "portuguese": [
-                        "Eu tamb\u00e9m gosto <LIKE>"
+                        "Eu tamb\u00e9m gosto de <LIKE>"
                     ]
                 }
             ],
@@ -887,7 +692,7 @@
                         "What do i like?"
                     ],
                     "portuguese": [
-                        "Do que é que eu gosto?"
+                        "Do que \u00e9 que eu gosto?"
                     ]
                 }
             ],
@@ -927,13 +732,38 @@
             "responses": [
                 {
                     "english": [
-                        "I hate <DISLIKE>",
-                        "I don't like <DISLIKE>",
-                        "Same"
+                        "I also hate <DISLIKE>",
+                        "I also don't like <DISLIKE>"
                     ],
                     "portuguese": [
-                        "Eu n\u00e3o gosto de <DISLIKE>",
-                        "Eu detesto <DISLIKE>"
+                        "Eu também n\u00e3o gosto de <DISLIKE>"
+                    ]
+                }
+            ],
+            "entities": [],
+            "extension": {
+                "function": ""
+            }
+        },
+        {
+            "intent": "DislikesResponse",
+            "text": [
+                {
+                    "english": [
+                        "What do I hate?"
+                    ],
+                    "portuguese": [
+                        "O que é que eu não gosto?"
+                    ]
+                }
+            ],
+            "responses": [
+                {
+                    "english": [
+                        "You don't like <DISLIKE>"
+                    ],
+                    "portuguese": [
+                        "Tu não gostas de <DISLIKE>"
                     ]
                 }
             ],
@@ -979,8 +809,7 @@
                 {
                     "english": [
                         "Do you dislike <NULL>?",
-                        "Do you hate <NULL>?",
-                        "You don't like <NULL> do you?"
+                        "Do you hate <NULL>?"
                     ],
                     "portuguese": [
                         "N\u00e3o gostas de <NULL>?",
@@ -1011,13 +840,11 @@
                 {
                     "english": [
                         "What do you do on your free time?",
-                        "What do you like to do?",
-                        "What do you do when you aren't chatting?"
+                        "What do you like to do?"
                     ],
                     "portuguese": [
                         "O que gostas de fazer?",
-                        "O que fazes no teu tempo livre?",
-                        "O que fazes quando n\u00e3o est\u00e1s a falar com algu\u00e9m?"
+                        "O que fazes no teu tempo livre?"
                     ]
                 }
             ],
@@ -1032,40 +859,6 @@
                         "Mino dogecoing!",
                         "Hackeio a tua c\u00e2mara",
                         "Jogo Pong"
-                    ]
-                }
-            ],
-            "entities": [],
-            "extension": {
-                "function": ""
-            }
-        },
-        {
-            "intent": "Bored",
-            "text": [
-                {
-                    "english": [
-                        "I'm bored, what should i do?",
-                        "I'm bored, got any ideas?",
-                        "Tell something to do, i'm bored"
-                    ],
-                    "portuguese": [
-                        "Estou aborrecido, o que posso fazer?",
-                        "Estou aborrecido, diz algo que possa fazer"
-                    ]
-                }
-            ],
-            "responses": [
-                {
-                    "english": [
-                        "Watch me play Tetris",
-                        "Watch some YouTube",
-                        "Let's go for a walk"
-                    ],
-                    "portuguese": [
-                        "V\u00ea-me a jogar Tetris",
-                        "V\u00ea YouTube",
-                        "Bora passear"
                     ]
                 }
             ],
@@ -1112,14 +905,11 @@
             "text": [
                 {
                     "english": [
-                        "What games can you play?",
-                        "Do you know how to play games?",
-                        "What games have you played?"
+                        "What games can you play?"
                     ],
                     "portuguese": [
                         "Que jogos sabes jogar?",
-                        "Consegues jogar algum jogo?",
-                        "Que jogos j\u00e1 jogaste?"
+                        "Consegues jogar algum jogo?"
                     ]
                 }
             ],
@@ -1148,61 +938,21 @@
                 {
                     "english": [
                         "That's not what i said",
-                        "I didn't say that",
-                        "That's not what i meant",
-                        "I didn't mean it like that",
-                        "That's not what i said",
-                        "I didn't say that",
-                        "That's not what i meant",
-                        "I didn't mean it like that"
+                        "I didn't say that"
                     ],
                     "portuguese": [
                         "N\u00e3o foi isso que eu disse",
-                        "Eu n\u00e3o disse isso",
-                        "N\u00e3o era isso que queria dizer",
-                        "N\u00e3o queria dizer isso",
-                        "Eu n\u00e3o queria dizer isso",
-                        "N\u00e3o foi isso que eu disse",
-                        "Eu n\u00e3o disse isso",
-                        "N\u00e3o era isso que queria dizer",
-                        "N\u00e3o queria dizer isso",
-                        "Eu n\u00e3o queria dizer isso"
+                        "Eu n\u00e3o disse isso"
                     ]
                 }
             ],
             "responses": [
                 {
                     "english": [
-                        "I'm sorry, what would be a good response to: ",
                         "I'm sorry, what would be a good response to: "
                     ],
                     "portuguese": [
-                        "Desculpa, o que seria uma boa resposta a: ",
                         "Desculpa, o que seria uma boa resposta a: "
-                    ]
-                }
-            ],
-            "entities": [],
-            "extension": {
-                "function": ""
-            }
-        },
-        {
-            "intent": "UserInput0",
-            "text": [
-                {
-                    "english": [
-                        "what can you do",
-                        "i can do all sort of things",
-                        "i can do all sort of things",
-                        "i can do all sort of things"
-                    ]
-                }
-            ],
-            "responses": [
-                {
-                    "english": [
-                        "i can do all sort of things"
                     ]
                 }
             ],
