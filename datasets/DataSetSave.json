@@ -17,13 +17,13 @@
             "responses": [
                 {
                     "english": [
-                        "Hi human, please tell me your Chatty user",
-                        "Hello human, please tell me your Chatty user",
-                        "Hola human, please tell me your Chatty user"
+                        "Hi human, please tell me your Chatty username",
+                        "Hello human, please tell me your Chatty username",
+                        "Hola human, please tell me your Chatty username"
                     ],
                     "portuguese": [
-                        "Ol\u00e1 humano, por favor indique o seu Chatty user",
-                        "Ei humano, por favor indique o seu Chatty user"
+                        "Ol\u00e1 humano, por favor indique o seu Chatty username",
+                        "Ei humano, por favor indique o seu Chatty username"
                     ]
                 }
             ],
@@ -90,7 +90,7 @@
                         "Hello, how are you? I am great thanks!",
                         "Hello, I am good thank you, how are you?",
                         "Hi, I am great, how are you?",
-                        "Hi, how are you? I am great thanks!",
+                        "Hi, I am great thanks! How are you?",
                         "Hi, I am good thank you, how are you?",
                         "Hi, good thank you, how are you?"
                     ],
@@ -872,11 +872,13 @@
             "text": [
                 {
                     "english": [
+                        "Can you walk",
                         "You can go for walks?",
-                        "How do we go on a walk?"
+                        "How do we go on a walk?",
+                        "Can you walk?"
                     ],
                     "portuguese": [
-                        "Consegues ir passear?",
+                        "Consegues andar?",
                         "Como \u00e9 que vamos passear?"
                     ]
                 }
@@ -953,6 +955,61 @@
                     ],
                     "portuguese": [
                         "Desculpa, o que seria uma boa resposta a: "
+                    ]
+                }
+            ],
+            "entities": [],
+            "extension": {
+                "function": ""
+            }
+        },
+        {
+            "intent": "SintaticTree",
+            "text": [
+                {
+                    "english": [
+                        "Show me the sintatic tree",
+                        "Can you show me the sintatic tree",
+                        "Can I see the sintatic tree"
+                    ],
+                    "portuguese": [
+                        "Posso ver a árvore sintática",
+                        "Mostra me a árvore sintática",
+                        "Podes me mostrar a árvore sintática"
+                    ]
+                }
+            ],
+            "responses": [
+                {
+                    "english": [
+                        "Here is the semantic tree from the last sentence:"
+                    ],
+                    "portuguese": [
+                        "Aqui est\u00e1 a \u00e1rvore sem\u00e2ntica:"
+                    ]
+                }
+            ],
+            "entities": [],
+            "extension": {
+                "function": ""
+            }
+        },
+        {
+            "intent": "UserInput0",
+            "text": [
+                {
+                    "english": [
+                        "what can you do",
+                        "i can do all sort of things",
+                        "i can do all sort of things",
+                        "i can do all sort of things"
+                    ]
+                }
+            ],
+            "responses": [
+                {
+                    "english": [
+                        "i can do all sort of things"
                     ]
                 }
             ],

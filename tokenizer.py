@@ -36,6 +36,8 @@ class Tokenizer(object):
 
         for token in initial_tokens:
 
+            initial_token = token
+
             # Remove punctuation
             token = token.strip('.,;:!?()[]{}')
 
@@ -81,7 +83,7 @@ class Tokenizer(object):
             if token not in token_words:
                 token_words[token] = []
 
-            token_words[token].append(token)
+            token_words[token].append(initial_token)
 
         return token_words
     
