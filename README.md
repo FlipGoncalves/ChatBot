@@ -1,22 +1,23 @@
 # ChatBot 
 
-## Tokenizer
+## Context
 
-The Tokenizer is a class that takes a sentence and returns a list of tokens.
-The ChatBot uses the Tokenizer to split the user's input into tokens, which are then used to find the best match for the user's input.
+Intelligent Systems II ChatBot
 
-It supports the following features:
+Project made by:
+- Daniela Dias, 98039
+- Filipe Gonçalves, 98083
+- Gonçalo Machado, 98359
+- João Borges, 98155
+- Miguel Beirão, 98157
 
-- Split a sentence into tokens
-- Remove punctuation and special characters
-- Remove accents
-- Ignore words that don't meet a minimum length
-- Remove stop words
-- Normalize words to lowercase
-- Stem words 
-- Lemmatize words
+## Deliverables
 
-## Setup
+Both the presentation and the report are in the "deliverables" folder.
+
+## How to Run
 The program needs to run the following commands in a python compiler:
+```
 python3 -m pip install -r requirements.txt
 python3 -m spacy download en_core_web_sm
+```

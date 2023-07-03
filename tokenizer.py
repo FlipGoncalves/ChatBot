@@ -1,8 +1,8 @@
 import nltk
 from unidecode import unidecode
 
-# nltk.download('wordnet')
-# nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 
 def load_stop_words(path):
